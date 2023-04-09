@@ -1,0 +1,26 @@
+.note-sidebar-header {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  font-weight: 700;
+
+  background: #e5e5e5;
+
+  padding: 0 0.5rem;
+  border-bottom: 1px solid #ccc;
+
+  input {
+    display: block;
+    font-size: 1rem;
+    border-radius: .3rem;
+
+    border: 1px solid #D0D0D0;
+
+    outline: 0;
+    height: 35px;
+    -webkit-appearance: none;
+    margin: .5rem 0;
+    min-width: 0;
+    padding: 0.5rem;
+  }
+}

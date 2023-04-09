@@ -1,0 +1,8 @@
+{
+  "name": "takenote",
+  "version": "1.0.0",
+  "description": "A web-based notes app",
+  "author": "Renar Saaremets",
+  "license": "ISC",
+  "private": false
+}

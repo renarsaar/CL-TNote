@@ -1,0 +1,14 @@
+.note-sidebar-container {
+  flex: 0 0 auto;
+  position: relative;
+  outline: none;
+  width: 330px;
+}
+
+.note-sidebar {
+  background: #E5E5E5;
+  border-right: 1px solid #E5E5E5;
+  height: 100%;
+  overflow-y: hidden;
+  overflow-x: hidden;
+}
