@@ -1,34 +1,34 @@
-import { createContext, FC, ReactElement, useState, useEffect } from 'react';
-import { ConfigContextState } from './types';
+import { createContext, FC, ReactElement, useState, useEffect } from 'react'
+import { ConfigContextState } from './types'
 
 const contextDefaultValues: ConfigContextState = {
   configs: {},
   addConfig: () => { }
-};
+}
 
 type ConfigObject = {
   key: string,
   value: any
-};
+}
 
 export const ConfigContext = createContext<ConfigContextState>(
   contextDefaultValues
-);
+)
 
 type ProviderProps = {
-  configJson: object,
+  configsJson: object,
   children: ReactElement
-};
+}
 
 const ConfigsProvider: FC<ProviderProps> = (props) => {
-  const [configs, setConfigs] = useState<object>(props.configJson);
-  const settings = localStorage.getItem('settings');
+  const [configs, setConfigs] = useState<object>(props.configsJson)
+  const settings = localStorage.getItem('settings')
 
   useEffect(() => {
     settings !== null
       ? setConfigs(JSON.parse(settings))
-      : localStorage.setItem('settings', JSON.stringify(configs));
-  }, [settings]);
+      : localStorage.setItem('settings', JSON.stringify(configs))
+  }, [settings])
 
   const addConfig = (prevConfig: any, newConfig: ConfigObject) => {
     prevConfig[newConfig.key] = newConfig.value;
@@ -41,7 +41,7 @@ const ConfigsProvider: FC<ProviderProps> = (props) => {
     <ConfigContext.Provider value={{ configs, addConfig }}>
       {props.children}
     </ConfigContext.Provider>
-  );
+  )
 }
 
-export default ConfigsProvider;
+export default ConfigsProvider

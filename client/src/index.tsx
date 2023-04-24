@@ -5,8 +5,9 @@ import { store } from './store/store';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
 
+import ResizerProvider from './context/ResizerContext';
 import ConfigsProvider from './context/ConfigContext';
-import configData from './utils/config.json';
+import configData from './utils/configs.json';
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);
@@ -14,8 +15,10 @@ const root = createRoot(container);
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <ConfigsProvider configJson={configData}>
-        <App />
+      <ConfigsProvider configsJson={configData}>
+        <ResizerProvider>
+          <App />
+        </ResizerProvider>
       </ConfigsProvider>
     </Provider>
   </React.StrictMode>

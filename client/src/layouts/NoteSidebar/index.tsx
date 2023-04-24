@@ -1,17 +1,24 @@
+import { useContext } from 'react'
+
 import NoteSidebarHeader from './NoteSidebarHeader'
 import NoteList from '../../components/NoteList'
+import Resizer from '../../components/Reziser'
+import { ResizerContext } from '../../context'
 import './style.scss'
 
-type Props = {}
+export default function NoteSideBar() {
+  const { noteSideBarWidth } = useContext(ResizerContext);
 
-export default function index({ }: Props) {
   return (
-    <div className='note-sidebar-container'>
-      <aside className='note-sidebar'>
-        <NoteSidebarHeader />
+    <>
+      <div className='note-sidebar-container' style={{ width: noteSideBarWidth }}>
+        <aside className='note-sidebar'>
+          <NoteSidebarHeader />
+          <NoteList />
+        </aside>
+      </div>
 
-        <NoteList />
-      </aside>
-    </div>
+      <Resizer component='NoteSideBar' />
+    </>
   )
 }

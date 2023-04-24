@@ -1,7 +1,9 @@
+import './style.scss'
+
 type Props = {}
 
 export default function index({ }: Props) {
   return (
-    <div>Note Editor</div>
+    <div className='note-editor'>Note Editor</div>
   )
 }

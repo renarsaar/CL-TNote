@@ -1,11 +1,14 @@
+import { useContext } from 'react'
+import { ResizerContext } from '../../context';
+
 import ScratchpadIcon from '../../components/Icons/ScratchpadIcon';
 import NoteIcon from '../../components/Icons/NoteIcon';
 import FavoritesIcon from '../../components/Icons/FavoritesIcon';
 import TrashIcon from '../../components/Icons/TrashIcon';
-
 import AppSidebarButton from '../../components/Buttons/AppSidebarButton';
 import NewNoteButton from '../../components/Buttons/NewNoteButton';
 import Categories from '../../components/Categories';
+import Resizer from '../../components/Reziser';
 
 import './style.scss';
 
@@ -27,30 +30,36 @@ const toggleTrash = () => {
   console.log('trash')
 }
 
-export default function index({ }: Props) {
+export default function AppSideBar({ }: Props) {
+  const { appSideBarWidth } = useContext(ResizerContext);
+
   return (
-    <aside className='app-sidebar'>
-      <NewNoteButton />
+    <>
+      <aside className='app-sidebar' style={{ width: appSideBarWidth }}>
+        <NewNoteButton />
 
-      <section>
-        <AppSidebarButton heading='Scratchpad' onClick={toggleScratchpad}>
-          <ScratchpadIcon />
-        </AppSidebarButton>
+        <section>
+          <AppSidebarButton heading='Scratchpad' onClick={toggleScratchpad}>
+            <ScratchpadIcon />
+          </AppSidebarButton>
 
-        <AppSidebarButton heading='Notes' onClick={toggleNotes}>
-          <NoteIcon />
-        </AppSidebarButton>
+          <AppSidebarButton heading='Notes' onClick={toggleNotes}>
+            <NoteIcon />
+          </AppSidebarButton>
 
-        <AppSidebarButton heading='Favorites' onClick={toggleFavorites}>
-          <FavoritesIcon />
-        </AppSidebarButton>
+          <AppSidebarButton heading='Favorites' onClick={toggleFavorites}>
+            <FavoritesIcon />
+          </AppSidebarButton>
 
-        <AppSidebarButton heading='Trash' onClick={toggleTrash}>
-          <TrashIcon />
-        </AppSidebarButton>
+          <AppSidebarButton heading='Trash' onClick={toggleTrash}>
+            <TrashIcon />
+          </AppSidebarButton>
 
-        <Categories />
-      </section>
-    </aside>
+          <Categories />
+        </section>
+      </aside>
+
+      <Resizer component='AppSideBar' />
+    </>
   )
 }
