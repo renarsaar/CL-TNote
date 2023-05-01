@@ -40,19 +40,19 @@ export default function AppSideBar({ }: Props) {
 
         <section>
           <AppSidebarButton heading='Scratchpad' onClick={toggleScratchpad}>
-            <ScratchpadIcon />
+            <ScratchpadIcon className='app-sidebar-icon' width={15} height={15} />
           </AppSidebarButton>
 
           <AppSidebarButton heading='Notes' onClick={toggleNotes}>
-            <NoteIcon />
+            <NoteIcon className='app-sidebar-icon' width={15} height={15} />
           </AppSidebarButton>
 
           <AppSidebarButton heading='Favorites' onClick={toggleFavorites}>
-            <FavoritesIcon />
+            <FavoritesIcon className='app-sidebar-icon' width={15} height={15} />
           </AppSidebarButton>
 
           <AppSidebarButton heading='Trash' onClick={toggleTrash}>
-            <TrashIcon />
+            <TrashIcon className='app-sidebar-icon' width={15} height={15} />
           </AppSidebarButton>
 
           <Categories />

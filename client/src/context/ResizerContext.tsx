@@ -12,7 +12,6 @@ const contextDefaultValues: ResizerContextState = {
   handleNoteSideBarWidth: () => { }
 }
 
-
 export const ResizerContext = createContext<ResizerContextState>(
   contextDefaultValues
 )

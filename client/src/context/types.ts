@@ -1,5 +1,5 @@
 export type ConfigContextState = {
-  configs: any;
+  configs: any; //!
   addConfig: (prevConfig: any, config: ConfigObject) => void;
 }
 

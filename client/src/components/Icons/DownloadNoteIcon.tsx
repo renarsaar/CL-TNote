@@ -1,11 +1,10 @@
 type Props = {
-  isCollapsed: boolean;
-  className: 'app-sidebar-icon' | 'app-sidebar-icon collapsed';
+  className: 'note-menu-bar-icon';
   width: number;
   height: number;
 }
 
-export default function CollapseIcon({ isCollapsed, className, width, height }: Props) {
+export default function DownloadNoteIcon({ className, width, height }: Props) {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -17,11 +16,12 @@ export default function CollapseIcon({ isCollapsed, className, width, height }: 
       strokeWidth='2'
       strokeLinecap='round'
       strokeLinejoin='round'
+      aria-hidden='true'
       className={className}
     >
-      {isCollapsed === true
-        ? <polyline points='9 18 15 12 9 6'></polyline>
-        : <polyline points='6 9 12 15 18 9'></polyline>}
+      <path d='M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4'></path>
+      <polyline points='7 10 12 15 17 10'></polyline>
+      <line x1='12' y1='15' x2='12' y2='3'></line>
     </svg>
   )
 }
