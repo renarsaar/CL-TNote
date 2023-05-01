@@ -1,13 +1,8 @@
 .note-sidebar-container {
-  flex: 0 0 auto; // 0 0
-  // position: relative;
-  // outline: none;
+  flex: 0 0 auto;
   box-sizing: border-box;
 
-  // width: 330px;
-  // min-width: 150px;
-  // resize: horizontal;
-  // overflow: auto;
+  border-right: 2px solid #ccc;
 }
 
 .note-sidebar {

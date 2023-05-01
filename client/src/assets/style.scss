@@ -62,19 +62,11 @@ input[type=search] {
 .panel {
   display: block;
   flex: 1 1 0%;
-  // position: relative;
   outline: none;
 
   &-split {
     display: flex;
-    // flex: 1 1 0%;
     height: 100%;
-    // position: absolute;
-    // outline: none;
-    // overflow: hidden;
     user-select: text;
-    // flex-direction: row;
-    // left: 0px;
-    // right: 0px;
   }
 }

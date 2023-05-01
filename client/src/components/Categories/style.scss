@@ -21,10 +21,6 @@
     line-height: 1;
     margin: 0;
 
-    &-icon {
-      margin-right: .75rem;
-    }
-
     h2 {
       margin: 0;
       color: v.$app-sidebar-categories-heading-color;
@@ -51,7 +47,7 @@
     margin: 0;
     padding: 0.5rem 1rem;
 
-    &:hover svg {
+    &:hover .app-sidebar-icon {
       stroke: #FFF;
     }
   }

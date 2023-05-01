@@ -1,0 +1,37 @@
+.note-menu-bar {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  height: 40px;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 99;
+
+  color: #404040;
+  background-color: #E5E5E5;
+  border-top: 1px solid #D8D8D8;
+
+  nav {
+    display: flex;
+    align-items: center;
+
+    .note-menu-bar-button {
+      cursor: pointer;
+      padding: 0 0.75rem;
+      height: 39px;
+      background-color: #E5E5E5;
+      border: none;
+
+      &:hover {
+        color: #404040;
+        background: #d8d8d8;
+      }
+
+      .note-menu-bar-icon {
+        stroke: #666;
+      }
+    }
+  }
+}

@@ -12,8 +12,8 @@ export default function NewNoteButton({ }: Props) {
   const { theme } = configs;
 
   return (
-    <button className={theme === 'dark' ? 'action-button dark' : 'action-button'}>
-      <NewNoteIcon />
+    <button className={theme === 'dark' ? 'new-note-button dark' : 'new-note-button'}>
+      <NewNoteIcon className='new-note-button-icon' width={18} height={18} />
 
       <span>New note</span>
     </button>
