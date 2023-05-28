@@ -18,7 +18,7 @@ export const ResizerContext = createContext<ResizerContextState>(
 
 type ProviderProps = { children: ReactElement }
 
-const ResizerProvider: FC<ProviderProps> = (props) => {
+const ResizerProvider: FC<ProviderProps> = ({ children }) => {
   const [appSideBarDrag, setAppSideBarDrag] = useState<boolean>(false)
   const [noteSideBarDrag, setNoteSideBarDrag] = useState<boolean>(false)
   const [appSideBarWidth, setAppSideBarWidth] = useState<number>(contextDefaultValues.appSideBarWidth)
@@ -52,7 +52,7 @@ const ResizerProvider: FC<ProviderProps> = (props) => {
         handleNoteSideBarDrag,
         handleNoteSideBarWidth
       }}>
-      {props.children}
+      {children}
     </ResizerContext.Provider>
   )
 }

@@ -1,5 +1,9 @@
+export type ConfigObject = {
+  [key: string]: any
+}
+
 export type ConfigContextState = {
-  configs: any; //!
+  configs: ConfigObject;
   addConfig: (prevConfig: any, config: ConfigObject) => void;
 }
 
@@ -12,9 +16,4 @@ export type ResizerContextState = {
   handleAppSideBarWidth: (width: number) => void;
   handleNoteSideBarDrag: (drag: boolean) => void;
   handleNoteSideBarWidth: (width: number) => void;
-}
-
-type ConfigObject = {
-  key: string
-  value: any
 }

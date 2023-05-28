@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef } from 'react'
+import { useContext, useRef } from 'react'
 import AppSidebar from '../layouts/AppSidebar'
 import NoteSideBar from '../layouts/NoteSidebar'
 import NoteEditor from '../layouts/NoteEditor'
@@ -8,17 +8,11 @@ import '../assets/style.scss';
 
 function App() {
   const splitPanelElement = useRef<HTMLDivElement>(null);
-  const { configs, addConfig } = useContext(ConfigContext);
+  const { configs } = useContext(ConfigContext);
+  const { theme } = configs;
   const {
     appSideBarDrag, noteSideBarDrag, handleAppSideBarWidth, handleNoteSideBarWidth, appSideBarWidth
   } = useContext(ResizerContext);
-
-  // addConfig(configs, {
-  //   "key": "test",
-  //   "value": "aaaa"
-  // });
-
-  const { theme } = configs;
 
   const handleOnMouseMove = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     const { clientX } = e;

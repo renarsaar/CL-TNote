@@ -1,45 +1,53 @@
 import { createContext, FC, ReactElement, useState, useEffect } from 'react'
-import { ConfigContextState } from './types'
+import { ConfigContextState, ConfigObject } from './types'
 
 const contextDefaultValues: ConfigContextState = {
-  configs: {},
+  configs: {
+    loading: true,
+    theme: 'light',
+    markdownPreview: false,
+    notesSortBy: 'lastUpdated',
+    sidebarVisible: true,
+    codeMirrorOptions: {
+      textDirection: 'ltr',
+      scrollPastEnd: false,
+      activeLineHighlight: true,
+      lineNumbers: true
+    }
+  },
   addConfig: () => { }
-}
-
-type ConfigObject = {
-  key: string,
-  value: any
 }
 
 export const ConfigContext = createContext<ConfigContextState>(
   contextDefaultValues
 )
 
-type ProviderProps = {
-  configsJson: object,
-  children: ReactElement
-}
+type ProviderProps = { children: ReactElement }
 
-const ConfigsProvider: FC<ProviderProps> = (props) => {
-  const [configs, setConfigs] = useState<object>(props.configsJson)
-  const settings = localStorage.getItem('settings')
+const ConfigsProvider: FC<ProviderProps> = ({ children }) => {
+  const [configs, setConfigs] = useState<ConfigObject>(contextDefaultValues.configs)
 
   useEffect(() => {
+    const settings = localStorage.getItem('settings')
+
     settings !== null
       ? setConfigs(JSON.parse(settings))
       : localStorage.setItem('settings', JSON.stringify(configs))
-  }, [settings])
 
-  const addConfig = (prevConfig: any, newConfig: ConfigObject) => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const addConfig = (prevConfig: ConfigObject, newConfig: ConfigObject) => {
     prevConfig[newConfig.key] = newConfig.value;
 
-    setConfigs(prevConfig);
+    setConfigs({ ...prevConfig });
+
     localStorage.setItem('settings', JSON.stringify(prevConfig));
   }
 
   return (
     <ConfigContext.Provider value={{ configs, addConfig }}>
-      {props.children}
+      {children}
     </ConfigContext.Provider>
   )
 }

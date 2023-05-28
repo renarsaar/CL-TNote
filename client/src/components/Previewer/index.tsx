@@ -1,11 +1,15 @@
-import React from 'react'
+import MarkdownPreview from '@uiw/react-markdown-preview'
 
 import './style.scss'
 
-type Props = {}
+type Props = {
+  data: string;
+}
 
-export default function Previewer({ }: Props) {
+export default function Previewer({ data }: Props) {
   return (
-    <div className='note-previewer'>Previewer</div>
+    <div className='note-previewer'>
+      <MarkdownPreview source={data} />
+    </div>
   )
 }

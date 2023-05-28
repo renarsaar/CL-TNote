@@ -4,10 +4,8 @@ import { Provider } from 'react-redux';
 import { store } from './store/store';
 import App from './components/App';
 import reportWebVitals from './reportWebVitals';
-
 import ResizerProvider from './context/ResizerContext';
 import ConfigsProvider from './context/ConfigContext';
-import configData from './utils/configs.json';
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);
@@ -15,7 +13,7 @@ const root = createRoot(container);
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <ConfigsProvider configsJson={configData}>
+      <ConfigsProvider>
         <ResizerProvider>
           <App />
         </ResizerProvider>
