@@ -11,7 +11,7 @@ const contextDefaultValues: ConfigContextState = {
     codeMirrorOptions: {
       textDirection: 'ltr',
       scrollPastEnd: false,
-      activeLineHighlight: true,
+      highlightActiveLine: false,
       lineNumbers: true
     }
   },
