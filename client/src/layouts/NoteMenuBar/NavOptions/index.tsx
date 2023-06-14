@@ -1,3 +1,6 @@
+import ConfigsModal from '../../../components/ConfigsModal'
+import useModal from '../../../hooks/useModal'
+
 import ConfigsIcon from '../../../components/Icons/ConfigsIcon'
 import DarkModeIcon from '../../../components/Icons/DarkModeIcon'
 import SyncNotesIcon from '../../../components/Icons/SyncNotesIcon'
@@ -6,6 +9,8 @@ import LastSynced from '../../../components/LastSynced'
 type Props = {}
 
 export default function NavOptions({ }: Props) {
+  const { isShowing, toggle } = useModal();
+
   return (
     <nav>
       <LastSynced />
@@ -18,8 +23,9 @@ export default function NavOptions({ }: Props) {
         <DarkModeIcon className='note-menu-bar-icon' width={20} height={20} />
       </button>
 
-      <button className='note-menu-bar-button'>
+      <button className='note-menu-bar-button' onClick={toggle}>
         <ConfigsIcon className='note-menu-bar-icon' width={20} height={20} />
+        <ConfigsModal isShowing={isShowing} hide={toggle} />
       </button>
     </nav>
   )

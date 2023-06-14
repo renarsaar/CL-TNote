@@ -1,5 +1,5 @@
 type Props = {
-  className: 'note-menu-bar-icon';
+  className: 'note-menu-bar-icon' | 'tab-button-icon';
   width: number;
   height: number;
 }
