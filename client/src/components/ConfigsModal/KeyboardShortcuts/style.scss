@@ -1,0 +1,25 @@
+  .settings-shortcut {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: .3rem 0;
+
+    .keys {
+      display: flex;
+
+      kbd {
+        background-color: #F7F7F7;
+        border: 1px solid #CCC;
+        border-radius: 3px;
+        box-shadow: 0 1px 0 rgba(0, 0, 0, .2), 0 0 0 2px #FFF inset;
+        color: #333;
+        display: inline-block;
+        font-family: Helvetica, Arial, sans-serif;
+        font-size: 12px;
+        line-height: 1.4;
+        margin: 0 .3rem;
+        padding: 0.1rem .6rem;
+        text-shadow: 0 1px 0 #FFF;
+      }
+    }
+  }
