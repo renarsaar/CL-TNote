@@ -1,11 +1,9 @@
 export interface Note {
   id: string,
-  categoryId: string,
-  title: string,
-  note: string,
+  category: string | null,
+  text: string,
   favorite: boolean,
-  trash: boolean,
-  createdAt: Date,
-  updatedAt: Date,
+  created: string,
   scratchPad?: boolean,
+  lastUpdated?: string | null,
 }

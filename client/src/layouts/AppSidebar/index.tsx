@@ -30,7 +30,7 @@ const toggleTrash = () => {
   console.log('trash')
 }
 
-export default function AppSideBar({ }: Props) {
+const AppSideBar = ({ }: Props) => {
   const { appSideBarWidth } = useContext(ResizerContext);
 
   return (
@@ -63,3 +63,5 @@ export default function AppSideBar({ }: Props) {
     </>
   )
 }
+
+export default AppSideBar

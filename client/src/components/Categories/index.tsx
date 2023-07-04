@@ -1,40 +1,40 @@
 import CategoryTitle from './CategoryTitle';
 import CategoryIcon from '../Icons/CategoryIcon';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import { getCategories, selectCategories } from '../../store/categories/categorySlice';
+import { useEffect } from 'react';
 
-type Props = {}
+const Categories = () => {
+  const dispatch = useAppDispatch()
+  const categories = useAppSelector(selectCategories);
 
-export default function index({ }: Props) {
+  useEffect(() => {
+    dispatch(getCategories())
+  }, [])
+
   return (
     <>
       <CategoryTitle />
 
       <div className='category-list'>
-        <div
-          tabIndex={0}
-          role="button"
-          draggable="false"
-          className="category-list-item"
-        >
-          <div className="category-list-name">
-            <CategoryIcon />
+        {categories.map((category) => (
+          <div
+            key={category.id}
+            tabIndex={0}
+            role="button"
+            draggable="false"
+            className="category-list-item"
+          >
+            <div className="category-list-name">
+              <CategoryIcon className='app-sidebar-icon' width={15} height={15} />
 
-            Dev
+              {category.name}
+            </div>
           </div>
-        </div>
-
-        <div
-          tabIndex={0}
-          role="button"
-          draggable="false"
-          className="category-list-item"
-        >
-          <div className="category-list-name">
-            <CategoryIcon />
-
-            Work
-          </div>
-        </div>
+        ))}
       </div>
     </>
   )
 }
+
+export default Categories

@@ -8,6 +8,25 @@
   margin: 0;
   padding: 0;
   font-size: 1rem;
+
+  &::-webkit-scrollbar {
+    width: 10px !important;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background: #FFFFFF !important;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: #B5B5B5 !important;
+  }
+
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: #FFFFFF !important;
+  }
 }
 
 body {

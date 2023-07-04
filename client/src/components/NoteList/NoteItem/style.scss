@@ -11,6 +11,24 @@
     background-color: #D8D8D8;
   }
 
+  &.selected {
+    background: #5183f5;
+    color: #fff;
+    border-bottom: 1px solid #3972f4;
+
+    & .note-category {
+      color: #FFFFFF99;
+
+      & .note-sidebar-icon {
+        stroke: #FFFFFF99;
+      }
+    }
+
+    & .note-list-outer .note-title .icon .note-sidebar-favorites-icon {
+      stroke: #FFF;
+    }
+  }
+
   .note-list-outer {
     display: flex;
     align-items: center;

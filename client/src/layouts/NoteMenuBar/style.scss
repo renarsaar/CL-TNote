@@ -1,14 +1,13 @@
 .note-menu-bar {
-  position: absolute;
+  position: sticky;
   bottom: 0;
-  left: 0;
+  right: 0;
   height: 40px;
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   z-index: 99;
-
   color: #404040;
   background-color: #E5E5E5;
   border-top: 1px solid #D8D8D8;
