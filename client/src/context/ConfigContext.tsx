@@ -43,8 +43,6 @@ const ConfigsProvider: FC<ProviderProps> = ({ children }) => {
     setConfigs({ ...prevConfig });
 
     localStorage.setItem('settings', JSON.stringify(prevConfig));
-
-    console.log(prevConfig, newConfig);
   }
 
   return (

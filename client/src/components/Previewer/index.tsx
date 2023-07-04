@@ -8,8 +8,6 @@ type Props = {
 
 export default function Previewer({ data }: Props) {
   return (
-    <div className='note-previewer'>
-      <MarkdownPreview source={data} />
-    </div>
+    <MarkdownPreview source={data} className='previewer' />
   )
 }

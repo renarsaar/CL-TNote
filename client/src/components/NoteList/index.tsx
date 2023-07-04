@@ -1,14 +1,15 @@
-import Note from './Note';
+import { useAppSelector } from '../../hooks/hooks';
+import { selectNotes } from '../../store/notes/notesSlice';
+import NoteItem from './NoteItem';
+import { Note } from '../../interfaces/Note';
 import './style.scss'
 
-type Props = {}
+export default function NoteList() {
+  const notes: Note[] = useAppSelector(selectNotes)
 
-const notes: string[] = ['Welcome to Takenote!', 'Slack sync', 'PS meeting'];
-
-export default function index({ }: Props) {
   return (
     <div className="note-list">
-      {notes.map((note, i) => <Note key={i} note={note} />)}
+      {notes.map((note) => <NoteItem key={note.id} note={note} />)}
     </div>
   )
 }
