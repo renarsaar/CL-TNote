@@ -26,10 +26,6 @@ export default function Editor({ note }: Props) {
     indentOnInput: false,
   };
 
-  // const onChange = React.useCallback((value: string) => {
-  //   setData(value)
-  // }, [])
-
   const handleChange = (value: string) => {
     dispatch(editNote({
       note,

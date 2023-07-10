@@ -1,12 +1,11 @@
 import { useEffect, useContext, useRef } from 'react'
+import { useAppDispatch } from '../hooks/hooks'
+import { ConfigContext, ResizerContext } from '../context'
+import { getNotes } from '../store/notes/notesSlice'
 import AppSidebar from '../layouts/AppSidebar'
 import NoteSideBar from '../layouts/NoteSidebar'
 import NoteEditor from '../layouts/NoteEditor'
-import { ConfigContext, ResizerContext } from '../context'
-
 import '../assets/style.scss';
-import { useAppDispatch } from '../hooks/hooks'
-import { getNotes } from '../store/notes/notesSlice'
 
 function App() {
   const dispatch = useAppDispatch();
@@ -44,8 +43,7 @@ function App() {
   return (
     <div className="App" style={theme === 'light' ? { color: '#d0d0d0' } : { color: '#7a7a7a' }} >
 
-      <div className="container" onMouseMove={handleOnMouseMove}
-        ref={splitPanelElement}>
+      <div className="container" onMouseMove={handleOnMouseMove} ref={splitPanelElement}>
         <AppSidebar />
 
         <div className='panel'>

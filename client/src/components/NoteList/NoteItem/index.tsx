@@ -22,10 +22,11 @@ const handleTitle = (text: string): string => {
 
 const NoteItem = ({ note }: Props) => {
   const { favorite, text } = note
-  const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch()
   const selectedNote = useAppSelector(selectSelectedNote)
+  const NOTE_NOT_SCRATCHPAD = note.scratchPad !== true // Todo: For future to add: && note.archived !== true
 
-  return (
+  return NOTE_NOT_SCRATCHPAD ? (
     <div
       className={selectedNote?.id === note.id ? 'note-list-item selected' : 'note-list-item'}
       onClick={() => dispatch(setSelectedNote({ note }))}
@@ -48,7 +49,7 @@ const NoteItem = ({ note }: Props) => {
 
       <Category note={note} />
     </div>
-  )
+  ) : null
 }
 
 export default NoteItem
