@@ -1,11 +1,12 @@
 import { useContext } from 'react'
-import './style.scss'
 import Previewer from '../../components/Previewer'
 import Editor from '../../components/Editor'
 import NoteMenuBar from '../NoteMenuBar'
 import { ConfigContext } from '../../context'
 import { useAppSelector } from '../../hooks/hooks'
 import { selectSelectedNote } from '../../store/notes/notesSlice'
+import './style.scss'
+import EmptyNote from '../../components/EmptyNote'
 
 type Props = {}
 
@@ -25,6 +26,8 @@ export default function NoteEditor({ }: Props) {
     </div>
   ) : (
     <div className='codemirror'>
+      <EmptyNote />
+
       <NoteMenuBar />
     </div>
   )

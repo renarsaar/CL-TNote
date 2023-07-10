@@ -26,12 +26,14 @@ export default function KeyboardShortcuts({ }: Props) {
         <div className='settings-shortcut' key={shortcut.name}>
           <div>{shortcut.name}</div>
 
-          <div className='keys'>{shortcut.sequences.map((key: string, i: number, array: string[]) => (
-            <Fragment key={i}>
-              <kbd>{key}</kbd>
-              {i + 1 === array.length ? '' : ' + '}
-            </Fragment>
-          ))}</div>
+          <div className='keys'>
+            {shortcut.sequences.map((key: string, i: number, array: string[]) => (
+              <Fragment key={i}>
+                <kbd>{key}</kbd>
+                {i + 1 === array.length ? '' : ' + '}
+              </Fragment>
+            ))}
+          </div>
         </div>
       ))}
     </>

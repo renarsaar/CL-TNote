@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { ResizerContext } from '../../context';
 
 import ScratchpadIcon from '../../components/Icons/ScratchpadIcon';
@@ -11,27 +11,51 @@ import Categories from '../../components/Categories';
 import Resizer from '../../components/Reziser';
 
 import './style.scss';
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
+import { selectNotes, setSelectedNote } from '../../store/notes/notesSlice';
+import { Note } from '../../interfaces/Note';
 
 type Props = {}
-
-const toggleScratchpad = () => {
-  console.log('scratchpad')
-}
-
-const toggleNotes = () => {
-  console.log('notes')
-}
-
-const toggleFavorites = () => {
-  console.log('favorites')
-}
-
-const toggleTrash = () => {
-  console.log('trash')
-}
+type Tabs = 'Notes' | 'Scratchpad' | 'Favorites' | 'Trash'
 
 const AppSideBar = ({ }: Props) => {
+  const dispatch = useAppDispatch()
+  const notes = useAppSelector(selectNotes)
   const { appSideBarWidth } = useContext(ResizerContext);
+  const [tab, setTab] = useState<Tabs>('Notes')
+
+  const toggleScratchpad = () => {
+    const scratchPadNote = notes.find((note) => note.scratchPad === true)!
+
+    dispatch(setSelectedNote({ note: scratchPadNote }))
+
+    setTab('Scratchpad')
+  }
+
+  const toggleNotes = () => {
+    if (tab === 'Notes') return
+
+    const NOTE_LIST_HAS_NOTES: boolean = notes.some((note, i) => i !== 0 && note.scratchPad === undefined)
+
+    if (NOTE_LIST_HAS_NOTES !== true) {
+      dispatch(setSelectedNote({ note: null }))
+      setTab('Notes')
+      return
+    }
+
+    const firstNote: Note = notes.find((note) => note.scratchPad !== true)!
+    dispatch(setSelectedNote({ note: firstNote }))
+
+    setTab('Notes')
+  }
+
+  const toggleFavorites = () => {
+    console.log('favorites')
+  }
+
+  const toggleTrash = () => {
+    console.log('trash')
+  }
 
   return (
     <>
@@ -39,19 +63,19 @@ const AppSideBar = ({ }: Props) => {
         <NewNoteButton />
 
         <section>
-          <AppSidebarButton heading='Scratchpad' onClick={toggleScratchpad}>
+          <AppSidebarButton heading='Scratchpad' selected={tab === 'Scratchpad'} onClick={toggleScratchpad}>
             <ScratchpadIcon className='app-sidebar-icon' width={15} height={15} />
           </AppSidebarButton>
 
-          <AppSidebarButton heading='Notes' onClick={toggleNotes}>
+          <AppSidebarButton heading='Notes' selected={tab === 'Notes'} onClick={toggleNotes}>
             <NoteIcon className='app-sidebar-icon' width={15} height={15} />
           </AppSidebarButton>
 
-          <AppSidebarButton heading='Favorites' onClick={toggleFavorites}>
+          <AppSidebarButton heading='Favorites' selected={tab === 'Favorites'} onClick={toggleFavorites}>
             <FavoritesIcon className='app-sidebar-icon' width={15} height={15} />
           </AppSidebarButton>
 
-          <AppSidebarButton heading='Trash' onClick={toggleTrash}>
+          <AppSidebarButton heading='Trash' selected={tab === 'Trash'} onClick={toggleTrash}>
             <TrashIcon className='app-sidebar-icon' width={15} height={15} />
           </AppSidebarButton>
 
