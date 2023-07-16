@@ -5,12 +5,10 @@ import NoteMenuBar from '../NoteMenuBar'
 import { ConfigContext } from '../../context'
 import { useAppSelector } from '../../hooks/hooks'
 import { selectSelectedNote } from '../../store/notes/notesSlice'
-import './style.scss'
 import EmptyNote from '../../components/EmptyNote'
+import './style.scss'
 
-type Props = {}
-
-export default function NoteEditor({ }: Props) {
+export default function NoteEditor() {
   const selectedNote = useAppSelector(selectSelectedNote || null);
   const { configs } = useContext(ConfigContext);
   const markdownPreview: boolean = configs.markdownPreview;
@@ -19,7 +17,7 @@ export default function NoteEditor({ }: Props) {
     <div className='codemirror'>
       {markdownPreview === true
         ? <Previewer data={selectedNote.text} />
-        : <Editor note={selectedNote} />
+        : <Editor noteId={selectedNote.id} text={selectedNote.text} />
       }
 
       <NoteMenuBar />

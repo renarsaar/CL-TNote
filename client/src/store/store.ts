@@ -1,11 +1,15 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
 import notesReducers from './notes/notesSlice'
+import scratchpadReducers from './scratchpad/scratchpadSlice'
 import categoriesReducers from './categories/categorySlice'
+import navigationReducers from './navigation/navigationSlice'
 
 export const store = configureStore({
   reducer: {
     notes: notesReducers,
-    categories: categoriesReducers
+    scratchpad: scratchpadReducers,
+    categories: categoriesReducers,
+    navigation: navigationReducers
   },
 });
 
