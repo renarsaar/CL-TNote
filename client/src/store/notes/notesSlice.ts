@@ -1,8 +1,8 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import moment from 'moment'
-import { v4 as uuidv4 } from 'uuid';
-import { RootState } from '../store';
-import { Note } from '../../interfaces/Note';
+import { v4 as uuidv4 } from 'uuid'
+import { RootState } from '../store'
+import { Note } from '../../interfaces/Note'
 
 type NoteState = {
   notes: Note[],
@@ -20,19 +20,9 @@ const noteSlice = createSlice({
   reducers: {
     getNotes: (state: NoteState) => {
       const notes: string | null = localStorage.getItem('notes')
-      const scratchPadNote: Note = {
-        id: uuidv4(),
-        category: null,
-        text: '# Scratchpad\n\nThe easiest note to find.',
-        favorite: false,
-        created: moment().toISOString(true),
-        scratchPad: true,
-        lastUpdated: null
-      }
 
       if (notes === null) {
         const newNotes: Note[] = [
-          { ...scratchPadNote },
           {
             id: uuidv4(),
             category: null,
@@ -53,26 +43,20 @@ const noteSlice = createSlice({
 
         localStorage.setItem('notes', JSON.stringify({
           notes: newNotes,
-          selectedNote: newNotes[1] // Todo: 0 is scratchpad. For future, notes.find -> first note not scratchpad
+          selectedNote: newNotes[0]
         }))
 
         return {
           ...state,
           notes: newNotes,
-          selectedNote: newNotes[1]
+          selectedNote: newNotes[0]
         }
       }
 
       const newNotes: NoteState = JSON.parse(notes)
 
-      const SCRATCHPAD_NOTE_EXISTS_IN_LOCAL_STORAGE: boolean = newNotes.notes.some((note) => note.scratchPad !== false)
-      if (SCRATCHPAD_NOTE_EXISTS_IN_LOCAL_STORAGE !== true) {
-        newNotes.notes.unshift(scratchPadNote)
-        state.notes.unshift(scratchPadNote)
-      }
-
-      const SELECTED_NOTE_EXISTS_IN_LOCAL_STORAGE: boolean = newNotes.selectedNote !== null
-      if (SELECTED_NOTE_EXISTS_IN_LOCAL_STORAGE !== true) {
+      const SELECTED_NOTE_NOT_NULL_IN_LOCAL_STORAGE: boolean = newNotes.selectedNote !== null
+      if (SELECTED_NOTE_NOT_NULL_IN_LOCAL_STORAGE !== true) {
         newNotes.selectedNote = null
         state.selectedNote = null
       }
@@ -84,20 +68,9 @@ const noteSlice = createSlice({
     setSelectedNote: (state: NoteState, action: PayloadAction<{ note: Note | null }>) => {
       const { note } = action.payload
 
-      const ONLY_SCRATCHPAD_IN_NOTE_LIST: boolean = note === null
-      if (ONLY_SCRATCHPAD_IN_NOTE_LIST) {
-        state.selectedNote = null
-        return
-      }
-
-      const IS_SAME_NOTE_SELECTED: boolean = note!.id === state.selectedNote?.id
-      if (IS_SAME_NOTE_SELECTED) return
-
       const removeUnEditedNotes = () => {
         state.notes.map((item) => {
-          const { text, scratchPad } = item
-
-          if (scratchPad === true) return note
+          const { text } = item
 
           if (text === '') {
             const index: number = state.notes.indexOf(item)
@@ -123,7 +96,6 @@ const noteSlice = createSlice({
         text: '',
         favorite: false,
         created: moment().toISOString(true),
-        scratchPad: false,
         lastUpdated: null
       }
 
@@ -141,14 +113,13 @@ const noteSlice = createSlice({
         selectedNote: state.selectedNote
       }))
     },
-    editNote: (state: NoteState, action: PayloadAction<{ note: Note, value: string }>) => {
-      const { note, value } = action.payload
-      const { id } = note
+    editNote: (state: NoteState, action: PayloadAction<{ noteId: string, value: string }>) => {
+      const { noteId, value } = action.payload
       const savedState = localStorage.getItem('notes')
       const newState: NoteState = JSON.parse(savedState!)
       const newNotes: Note[] = newState.notes
       const newSelectedNote: Note | null = newState.selectedNote
-      const index: number = newNotes.findIndex((note: Note) => note.id === id)
+      const index: number = newNotes.findIndex((note: Note) => note.id === noteId)
 
       const editNotesText = () => {
         newNotes[index].text = value

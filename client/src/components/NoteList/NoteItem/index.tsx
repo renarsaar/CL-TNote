@@ -24,32 +24,46 @@ const NoteItem = ({ note }: Props) => {
   const { favorite, text } = note
   const dispatch = useAppDispatch()
   const selectedNote = useAppSelector(selectSelectedNote)
-  const NOTE_NOT_SCRATCHPAD = note.scratchPad !== true // Todo: For future to add: && note.archived !== true
 
-  return NOTE_NOT_SCRATCHPAD ? (
+  const handleOnClick = () => {
+    const IS_SAME_NOTE_SELECTED: boolean = note.id === selectedNote?.id
+    if (IS_SAME_NOTE_SELECTED) return
+
+    dispatch(setSelectedNote({ note }))
+  }
+
+  return (
     <div
       className={selectedNote?.id === note.id ? 'note-list-item selected' : 'note-list-item'}
-      onClick={() => dispatch(setSelectedNote({ note }))}
+      onClick={handleOnClick}
     >
       <div className="note-list-outer">
         <div className="note-title">
           <div className="icon">
-            {favorite === true && <FavoritesIcon className='note-sidebar-favorites-icon' width={15} height={15} />}
+            {favorite === true && (
+              <FavoritesIcon
+                className='note-sidebar-favorites-icon'
+                width={15}
+                height={15}
+              />
+            )}
           </div>
 
-          <div className="truncate-text">{handleTitle(text)}</div>
+          <div className="truncate-text">
+            {handleTitle(text)}
+          </div>
         </div>
 
         <div className="note-options">
           <OptionsIcon />
 
-          <span className="sr-only"></span>
+          <span className="sr-only" />
         </div>
       </div>
 
       <Category note={note} />
     </div>
-  ) : null
+  )
 }
 
 export default NoteItem

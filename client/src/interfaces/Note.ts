@@ -4,6 +4,5 @@ export interface Note {
   text: string,
   favorite: boolean,
   created: string,
-  scratchPad?: boolean,
   lastUpdated?: string | null,
 }
