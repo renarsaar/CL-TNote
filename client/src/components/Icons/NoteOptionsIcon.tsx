@@ -1,9 +1,16 @@
-export default function OptionsIcon() {
+type Props = {
+  className: 'note-sidebar-icon' | 'note-sidebar-icon-active'
+  width: number
+  height: number
+  onClick: (e: React.MouseEvent<SVGElement>) => void
+}
+
+export default function NoteOptionsIcon({ className, width, height, onClick }: Props) {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
-      width='15'
-      height='15'
+      width={width}
+      height={height}
       viewBox='0 0 24 24'
       fill='none'
       stroke='currentColor'
@@ -11,7 +18,9 @@ export default function OptionsIcon() {
       strokeLinecap='round'
       strokeLinejoin='round'
       aria-hidden='true'
-      className='context-menu-action'
+      className={className}
+      onClick={onClick}
+      id='note-options-ellips-icon'
     >
       <circle cx='12' cy='12' r='1'></circle>
       <circle cx='19' cy='12' r='1'></circle>

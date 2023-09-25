@@ -1,0 +1,35 @@
+.options-nav {
+  font-size: .9rem;
+
+  &-item {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    padding: 0.5rem 1rem;
+    border-radius: 0;
+    color: #404040;
+
+    &:hover {
+      background: #F0F0F0;
+      color: #000;
+
+      &.options-context-icon {
+        stroke: #000;
+      }
+
+      &.trash {
+        background: #f2777a;
+        color: #FFF;
+
+        & .options-context-icon {
+          stroke: #FFF;
+        }
+      }
+    }
+
+    .options-context-icon {
+      stroke: #404040;
+      margin-right: .75rem;
+    }
+  }
+}

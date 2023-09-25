@@ -1,13 +1,13 @@
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks'
-import { selectSelectedNote, setSelectedNote } from '../../../store/notes/notesSlice'
+import { pruneNotes, selectSelectedNote, setSelectedNote } from '../../../store/notes/notesSlice'
 import Category from './Category'
+import NoteOptions from './NoteOptions'
 import FavoritesIcon from '../../Icons/FavoritesIcon'
-import OptionsIcon from '../../Icons/OptionsIcon'
 import { Note } from '../../../interfaces/Note'
 import './style.scss'
 
 type Props = {
-  note: Note,
+  note: Note
 }
 
 const handleTitle = (text: string): string => {
@@ -21,15 +21,16 @@ const handleTitle = (text: string): string => {
 }
 
 const NoteItem = ({ note }: Props) => {
-  const { favorite, text } = note
   const dispatch = useAppDispatch()
   const selectedNote = useAppSelector(selectSelectedNote)
+  const { favorite, text } = note
 
   const handleOnClick = () => {
-    const IS_SAME_NOTE_SELECTED: boolean = note.id === selectedNote?.id
-    if (IS_SAME_NOTE_SELECTED) return
+    // Clicked on same note
+    if (note.id === selectedNote?.id) return
 
     dispatch(setSelectedNote({ note }))
+    dispatch(pruneNotes())
   }
 
   return (
@@ -49,16 +50,15 @@ const NoteItem = ({ note }: Props) => {
             )}
           </div>
 
-          <div className="truncate-text">
-            {handleTitle(text)}
-          </div>
+          <div className="truncate-text">{handleTitle(text)}</div>
         </div>
 
-        <div className="note-options">
-          <OptionsIcon />
-
-          <span className="sr-only" />
-        </div>
+        <NoteOptions
+          noteId={note.id}
+          isTrash={note.trash}
+          isFavorite={note.favorite}
+          selectedNoteId={selectedNote?.id!}
+        />
       </div>
 
       <Category note={note} />

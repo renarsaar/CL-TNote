@@ -3,11 +3,11 @@ import MarkdownPreview from '@uiw/react-markdown-preview'
 import './style.scss'
 
 type Props = {
-  data: string;
+  text: string;
 }
 
-export default function Previewer({ data }: Props) {
+export default function Previewer({ text }: Props) {
   return (
-    <MarkdownPreview source={data} className='previewer' />
+    <MarkdownPreview source={text} className='previewer' />
   )
 }

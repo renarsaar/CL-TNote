@@ -28,124 +28,181 @@ const noteSlice = createSlice({
             category: null,
             text: 'Welcome to Takenote!\n\nTakeNote is a free, open-source notes app for the web. It is a demo project only, and does not integrate with any database or cloud. Your notes are saved in local storage and will not be permanently persisted, but are available for download.\n\nView the source on [Github](https://github.com/taniarascia/takenote).\n\n## Features\n\n- **Plain text notes** - take notes in an IDE-like environment that makes no assumptions\n- **Markdown preview** - view rendered HTML\n- **Linked notes** - use `{{uuid}}` syntax to link to notes within other notes\n- **Syntax highlighting** - light and dark mode available (based on the beautiful [New Moon theme](https://taniarascia.github.io/new-moon/))\n- **Keyboard shortcuts** - use the keyboard for all common tasks - creating notes and categories, toggling settings, and other options\n- **Drag and drop** - drag a note or multiple notes to categories, favorites, or trash\n- **Multi-cursor editing** - supports multiple cursors and other [Codemirror](https://codemirror.net/) options\n- **Search notes** - easily search all notes, or notes within a category\n- **Prettify notes** - use Prettier on the fly for your Markdown\n- **No WYSIWYG** - made for developers, by developers\n- **No database** - notes are only stored in the browser&apos;s local storage and are available for download and export to you alone\n- **No tracking or analytics** - &apos;nuff said\n- **GitHub integration** - self-hosted option is available for auto-syncing to a GitHub repository (not available in the demo)\n',
             favorite: false,
+            trash: false,
             created: moment().toISOString(true),
             lastUpdated: null
           },
-          {
-            id: uuidv4(),
-            category: 'bfaa5cdc-283a-48ad-baa0-614fcf277fbf',
-            text: 'Test note\nlorem ipsum......',
-            favorite: true,
-            created: moment().toISOString(true),
-            lastUpdated: null
-          }
         ]
 
-        localStorage.setItem('notes', JSON.stringify({
-          notes: newNotes,
-          selectedNote: newNotes[0]
-        }))
+        state.notes = newNotes
+        state.selectedNote = newNotes[0]
 
-        return {
-          ...state,
-          notes: newNotes,
-          selectedNote: newNotes[0]
+        localStorage.setItem('notes', JSON.stringify({ ...state }))
+      } else {
+        const newNotes: NoteState = JSON.parse(notes)
+
+        const SELECTED_NOTE_NOT_NULL_IN_LOCAL_STORAGE: boolean = newNotes.selectedNote !== null
+        if (SELECTED_NOTE_NOT_NULL_IN_LOCAL_STORAGE !== true) {
+          newNotes.selectedNote = null
+          state.selectedNote = null
         }
-      }
 
-      const newNotes: NoteState = JSON.parse(notes)
-
-      const SELECTED_NOTE_NOT_NULL_IN_LOCAL_STORAGE: boolean = newNotes.selectedNote !== null
-      if (SELECTED_NOTE_NOT_NULL_IN_LOCAL_STORAGE !== true) {
-        newNotes.selectedNote = null
-        state.selectedNote = null
-      }
-
-      return {
-        ...newNotes,
+        state.notes = newNotes.notes
+        state.selectedNote = newNotes.notes[0]
       }
     },
-    setSelectedNote: (state: NoteState, action: PayloadAction<{ note: Note | null }>) => {
+    setSelectedNote: (state: NoteState, action: PayloadAction<{ note: Note }>) => {
       const { note } = action.payload
 
-      const removeUnEditedNotes = () => {
-        state.notes.map((item) => {
-          const { text } = item
+      !note
+        ? state.selectedNote = null
+        : state.selectedNote = note
 
-          if (text === '') {
-            const index: number = state.notes.indexOf(item)
-            state.notes.splice(index, 1)
-          }
-
-          return note
-        })
-      }
-      removeUnEditedNotes()
-
-      localStorage.setItem('notes', JSON.stringify({
-        notes: state.notes,
-        selectedNote: note
-      }))
-
-      state.selectedNote = note
+      localStorage.setItem('notes', JSON.stringify({ ...state }))
     },
-    createNote: (state: NoteState) => {
+    createNote: (state: NoteState, action: PayloadAction<{ favorite: boolean }>) => {
+      const { favorite } = action.payload
       const note: Note = {
         id: uuidv4(),
         category: null,
         text: '',
-        favorite: false,
+        favorite,
+        trash: false,
         created: moment().toISOString(true),
         lastUpdated: null
       }
 
-      const IS_NOTE_EMPTY: boolean = state.selectedNote?.text === ''
-      if (IS_NOTE_EMPTY) {
-        const index: number = state.notes.indexOf(note)
-        state.notes.splice(index, 1)
-      }
+      // Check if previously created note is empty
+      if (state.selectedNote?.text === '') return
 
       state.notes.push(note)
       state.selectedNote = note
 
-      localStorage.setItem('notes', JSON.stringify({
-        notes: state.notes,
-        selectedNote: state.selectedNote
-      }))
+      localStorage.setItem('notes', JSON.stringify({ ...state }))
     },
-    editNote: (state: NoteState, action: PayloadAction<{ noteId: string, value: string }>) => {
+    editNoteText: (state: NoteState, action: PayloadAction<{ noteId: string, value: string }>) => {
       const { noteId, value } = action.payload
-      const savedState = localStorage.getItem('notes')
-      const newState: NoteState = JSON.parse(savedState!)
-      const newNotes: Note[] = newState.notes
-      const newSelectedNote: Note | null = newState.selectedNote
-      const index: number = newNotes.findIndex((note: Note) => note.id === noteId)
+      const existingNote: Note = state.notes.find((e: Note) => e.id === noteId)!
 
-      const editNotesText = () => {
-        newNotes[index].text = value
-        newSelectedNote!.text = value
+      existingNote.text = value
+      existingNote.lastUpdated = moment().toISOString(true)
+
+      state.selectedNote = existingNote
+
+      localStorage.setItem('notes', JSON.stringify({ ...state }))
+    },
+    toggleFavorite: (state: NoteState, action: PayloadAction<{ noteId: string, tab: string }>) => {
+      const { noteId, tab } = action.payload
+      const existingNote: Note = state.notes.find((note) => note.id === noteId)!
+
+      existingNote.favorite = !existingNote.favorite
+      existingNote.lastUpdated = moment().toISOString(true)
+
+      // Set new selectedNote
+      if (state.selectedNote !== null) {
+        switch (true) {
+          case tab === 'notes':
+            const nonTrashNotes = state.notes.filter((note) => note.trash !== true)
+
+            if (!nonTrashNotes.includes(existingNote)) {
+              state.selectedNote = nonTrashNotes[0] || null
+            }
+
+            break
+
+          case tab === 'favorites':
+            const favoriteNotes = state.notes.filter((note) => note.favorite === true && note.trash !== true)
+
+            if (!favoriteNotes.includes(existingNote)) {
+              state.selectedNote = favoriteNotes[0] || null
+            }
+
+            break
+        }
       }
 
-      const editNotesUpdateTime = () => {
-        newNotes[index].lastUpdated = moment().toISOString(true)
-        newSelectedNote!.lastUpdated = moment().toISOString(true)
+      localStorage.setItem('notes', JSON.stringify({ ...state }))
+    },
+    toggleTrash: (state: NoteState, action: PayloadAction<{ noteId: string, tab: string }>) => {
+      const { noteId, tab } = action.payload
+      const existingNote: Note = state.notes.find((note) => note.id === noteId)!
+
+      existingNote.trash = !existingNote.trash
+      existingNote.lastUpdated = moment().toISOString(true)
+
+      // Set new selectedNote
+      if (state.selectedNote !== null) {
+        switch (true) {
+          case tab === 'notes':
+            const nonTrashNotes = state.notes.filter((note) => note.trash !== true)
+
+            if (!nonTrashNotes.includes(existingNote)) {
+              state.selectedNote = nonTrashNotes[0] || null
+            }
+
+            break
+
+          case tab === 'favorites':
+            const favoriteNotes = state.notes.filter((note) => note.favorite === true && note.trash !== true)
+
+            if (!favoriteNotes.includes(existingNote)) {
+              state.selectedNote = favoriteNotes[0] || null
+            }
+
+            break
+
+          case tab === 'trash':
+            const trashNotes = state.notes.filter((note) => note.trash === true)
+
+            if (!trashNotes.includes(existingNote)) {
+              state.selectedNote = trashNotes[0] || null
+            }
+        }
       }
 
-      const editState = () => {
-        state.notes[index].text = value
-        state.selectedNote!.text = value
+      localStorage.setItem('notes', JSON.stringify({ ...state }))
+    },
+    deleteNote: (state: NoteState, action: PayloadAction<{ noteId: string, tab: string }>) => {
+      const { noteId, tab } = action.payload
+
+      state.notes = state.notes.filter((note) => note.id !== noteId)
+
+      if (state.selectedNote !== null) {
+        switch (true) {
+          case tab === 'trash':
+            const trashNotes = state.notes.filter((note) => note.trash === true)
+
+            state.selectedNote = trashNotes[0] || null
+        }
       }
 
-      editNotesText()
-      editNotesUpdateTime()
-      editState()
+      localStorage.setItem('notes', JSON.stringify({ ...state }))
+    },
+    pruneNotes: (state: NoteState) => {
+      if (state.notes.length === 0 || state.selectedNote === null) {
+        return
+      }
 
-      localStorage.setItem('notes', JSON.stringify({ ...newState }))
+      // Delete unedited Notes
+      state.notes.forEach((note) => {
+        const { text } = note
+
+        if (text === '') {
+          const index: number = state.notes.indexOf(note)
+          state.notes.splice(index, 1)
+
+          if (note.id === state.selectedNote!.id) state.selectedNote = state.notes[0] || null
+        }
+      })
+
+      localStorage.setItem('notes', JSON.stringify({ ...state }))
     }
   }
 })
 
-export const { getNotes, setSelectedNote, createNote, editNote } = noteSlice.actions
+export const {
+  getNotes, setSelectedNote, createNote, editNoteText, toggleFavorite, toggleTrash, deleteNote, pruneNotes
+} = noteSlice.actions
 export const selectNotes = (state: RootState) => state.notes.notes
 export const selectSelectedNote = (state: RootState) => state.notes.selectedNote
 export default noteSlice.reducer

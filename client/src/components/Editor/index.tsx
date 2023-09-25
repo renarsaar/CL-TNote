@@ -1,10 +1,10 @@
-import { useContext } from 'react'
 import ReactCodeMirror from '@uiw/react-codemirror'
+import { useContext } from 'react'
 import { javascript } from '@codemirror/lang-javascript'
 import { useAppDispatch } from '../../hooks/hooks'
 import { ConfigContext } from '../../context'
 import { ConfigContextState } from '../../context/types'
-import { editNote } from '../../store/notes/notesSlice'
+import { editNoteText } from '../../store/notes/notesSlice'
 import { editScratchpad } from '../../store/scratchpad/scratchpadSlice'
 import { codeMirrorTheme } from '../../utils/CodeMirrorTheme'
 import { BasicSetupOptions } from '../../interfaces/Configs'
@@ -16,7 +16,7 @@ type Props = {
   scratchpad?: boolean,
 }
 
-export default function Editor({ noteId, text, scratchpad }: Props) {
+const Editor = ({ noteId, text, scratchpad }: Props) => {
   const dispatch = useAppDispatch()
   const { configs: { codeMirrorOptions } } = useContext<ConfigContextState>(ConfigContext)
   const basicSetupOptions: BasicSetupOptions = {
@@ -29,13 +29,8 @@ export default function Editor({ noteId, text, scratchpad }: Props) {
 
   const handleChange = (value: string) => {
     scratchpad === true
-      ? dispatch(editScratchpad({
-        value
-      }))
-      : dispatch(editNote({
-        noteId,
-        value
-      }))
+      ? dispatch(editScratchpad({ value }))
+      : dispatch(editNoteText({ noteId, value }))
   }
 
   return (
@@ -50,3 +45,5 @@ export default function Editor({ noteId, text, scratchpad }: Props) {
     />
   )
 }
+
+export default Editor
