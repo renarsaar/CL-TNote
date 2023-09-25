@@ -1,47 +1,56 @@
 import { useContext } from 'react'
-import { ResizerContext } from '../../context';
-import { useAppDispatch, useAppSelector } from '../../hooks/hooks';
-import { selectNotes, setSelectedNote } from '../../store/notes/notesSlice';
-import { selectNavigation, setNavigation } from '../../store/navigation/navigationSlice';
+import { ResizerContext } from '../../context'
+import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
+import { pruneNotes, selectNotes, setSelectedNote } from '../../store/notes/notesSlice'
+import { selectNavigation, setNavigation } from '../../store/navigation/navigationSlice'
 
-import ScratchpadIcon from '../../components/Icons/ScratchpadIcon';
-import NoteIcon from '../../components/Icons/NoteIcon';
-import FavoritesIcon from '../../components/Icons/FavoritesIcon';
-import TrashIcon from '../../components/Icons/TrashIcon';
-import AppSidebarButton from '../../components/Buttons/AppSidebarButton';
-import NewNoteButton from '../../components/Buttons/NewNoteButton';
-import Categories from '../../components/Categories';
-import Resizer from '../../components/Reziser';
+import ScratchpadIcon from '../../components/Icons/ScratchpadIcon'
+import NoteIcon from '../../components/Icons/NoteIcon'
+import FavoritesIcon from '../../components/Icons/FavoritesIcon'
+import TrashIcon from '../../components/Icons/TrashIcon'
+import AppSidebarButton from '../../components/Buttons/AppSidebarButton'
+import NewNoteButton from '../../components/Buttons/NewNoteButton'
+import Categories from '../../components/Categories'
+import Resizer from '../../components/Reziser'
 
-import './style.scss';
+import './style.scss'
 
 const AppSideBar = () => {
   const dispatch = useAppDispatch()
+  const { tab } = useAppSelector(selectNavigation)
   const notes = useAppSelector(selectNotes)
-  const tab = useAppSelector(selectNavigation)
   const { appSideBarWidth } = useContext(ResizerContext);
 
   const toggleScratchpad = () => {
-    dispatch(setNavigation({ name: 'scratchpad', value: true }))
+    dispatch(pruneNotes())
+    dispatch(setNavigation('scratchpad'))
   }
 
   const toggleNotes = () => {
-    if (tab.notes === true) return
+    dispatch(pruneNotes())
+    dispatch(setNavigation('notes'))
 
-    const NOTE_LIST_HAS_NOTES: boolean = notes.length !== 0
-    if (NOTE_LIST_HAS_NOTES !== true) {
-      dispatch(setSelectedNote({ note: null }))
-    }
+    const nonTrashNotes = notes.filter((note) => note.trash !== true)
 
-    dispatch(setNavigation({ name: 'notes', value: true }))
+    dispatch(setSelectedNote({ note: nonTrashNotes[0] }))
   }
 
   const toggleFavorites = () => {
-    dispatch(setNavigation({ name: 'favorites', value: true }))
+    dispatch(pruneNotes())
+    dispatch(setNavigation('favorites'))
+
+    const favoriteNotes = notes.filter((note) => note.favorite === true && note.trash !== true)
+
+    dispatch(setSelectedNote({ note: favoriteNotes[0] }))
   }
 
   const toggleTrash = () => {
-    dispatch(setNavigation({ name: 'trash', value: true }))
+    dispatch(pruneNotes())
+    dispatch(setNavigation('trash'))
+
+    const trashNotes = notes.filter((note) => note.trash === true)
+
+    dispatch(setSelectedNote({ note: trashNotes[0] }))
   }
 
   return (
@@ -52,7 +61,7 @@ const AppSideBar = () => {
         <section>
           <AppSidebarButton
             heading='Scratchpad'
-            selected={tab.scratchpad === true}
+            selected={tab === 'scratchpad'}
             onClick={toggleScratchpad}
           >
             <ScratchpadIcon
@@ -64,7 +73,7 @@ const AppSideBar = () => {
 
           <AppSidebarButton
             heading='Notes'
-            selected={tab.notes === true}
+            selected={tab === 'notes'}
             onClick={toggleNotes}
           >
             <NoteIcon
@@ -76,7 +85,7 @@ const AppSideBar = () => {
 
           <AppSidebarButton
             heading='Favorites'
-            selected={tab.favorites === true}
+            selected={tab === 'favorites'}
             onClick={toggleFavorites}
           >
             <FavoritesIcon
@@ -88,7 +97,7 @@ const AppSideBar = () => {
 
           <AppSidebarButton
             heading='Trash'
-            selected={tab.trash === true}
+            selected={tab === 'trash'}
             onClick={toggleTrash}
           >
             <TrashIcon

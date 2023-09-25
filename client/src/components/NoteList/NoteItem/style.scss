@@ -56,27 +56,15 @@
         text-overflow: clip;
       }
     }
+  }
 
-    .note-options {
-      display: block;
-      font-size: 1rem;
-      color: transparent;
-      padding: 0.4rem;
-      z-index: 1;
-      cursor: pointer;
+  // Context-options
+  &:hover .note-list-outer .note-options .note-sidebar-icon {
+    stroke: #404040;
+  }
 
-      .sr-only {
-        position: absolute;
-        width: 1px;
-        height: 1px;
-        padding: 0;
-        margin: -1px;
-        overflow: hidden;
-        clip: rect(0, 0, 0, 0);
-        white-space: nowrap;
-        border-width: 0;
-      }
-    }
+  &:hover .note-list-outer .note-options .note-sidebar-icon-active {
+    stroke: #FFF;
   }
 
   .note-category {

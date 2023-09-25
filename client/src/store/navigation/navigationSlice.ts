@@ -1,31 +1,24 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '../store'
 
+type TabTypes = 'scratchpad' | 'notes' | 'favorites' | 'trash'
+
 type NavigationState = {
-  scratchpad: boolean,
-  notes: boolean,
-  favorites: boolean,
-  trash: boolean
+  tab: TabTypes
 }
 
 const initialState: NavigationState = {
-  scratchpad: false,
-  notes: true,
-  favorites: false,
-  trash: false
+  tab: 'notes'
 }
 
 const navigationSlice = createSlice({
   name: 'navigation',
   initialState,
   reducers: {
-    setNavigation: (state: NavigationState, action: PayloadAction<{ name: string, value: boolean }>) => {
-      const { name, value } = action.payload
+    setNavigation: (state: NavigationState, action: PayloadAction<TabTypes>) => {
+      if (state.tab === action.payload) return
 
-      Object.keys(state)
-        .forEach(tab => state[tab as keyof NavigationState] = false)
-
-      state[name as keyof NavigationState] = value
+      state.tab = action.payload
     }
   }
 })

@@ -1,6 +1,5 @@
 import { useContext } from 'react'
 import { ResizerContext } from '../../context/ResizerContext'
-
 import './style.scss'
 
 type Props = {

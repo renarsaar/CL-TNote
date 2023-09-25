@@ -8,15 +8,15 @@ import { selectSelectedNote } from '../../store/notes/notesSlice'
 import EmptyNote from '../../components/EmptyNote'
 import './style.scss'
 
-export default function NoteEditor() {
-  const selectedNote = useAppSelector(selectSelectedNote || null);
-  const { configs } = useContext(ConfigContext);
-  const markdownPreview: boolean = configs.markdownPreview;
+const CodeMirror = () => {
+  const { configs } = useContext(ConfigContext)
+  const markdownPreview: boolean = configs.markdownPreview
+  const selectedNote = useAppSelector(selectSelectedNote)
 
   return selectedNote !== null ? (
     <div className='codemirror'>
       {markdownPreview === true
-        ? <Previewer data={selectedNote.text} />
+        ? <Previewer text={selectedNote.text} />
         : <Editor noteId={selectedNote.id} text={selectedNote.text} />
       }
 
@@ -30,3 +30,5 @@ export default function NoteEditor() {
     </div>
   )
 }
+
+export default CodeMirror

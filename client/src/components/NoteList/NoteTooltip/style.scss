@@ -1,0 +1,14 @@
+.options-context-menu {
+  cursor: pointer;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  color: #404040;
+  background: #FFF;
+  border: 1px solid #c3c3c3;
+  border-radius: 4px;
+  padding: 0.25rem 0;
+  min-width: 230px;
+  z-index: 10;
+  box-shadow: 0 10px 15px rgba(0, 0, 0, .07), 0 5px 5px rgba(0, 0, 0, .2);
+}

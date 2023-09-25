@@ -6,14 +6,14 @@ import { getNotes } from '../store/notes/notesSlice'
 import { selectScratchpad } from '../store/scratchpad/scratchpadSlice'
 import AppSidebar from '../layouts/AppSidebar'
 import NoteSideBar from '../layouts/NoteSidebar'
-import NoteEditor from '../layouts/NoteEditor'
+import CodeMirror from '../layouts/CodeMirror'
 import Editor from './Editor'
-import '../assets/style.scss'
 import NoteMenuBar from '../layouts/NoteMenuBar'
+import '../assets/style.scss'
 
-function App() {
+const App = () => {
   const dispatch = useAppDispatch()
-  const tab = useAppSelector(selectNavigation)
+  const { tab } = useAppSelector(selectNavigation)
   const splitPanelElement = useRef<HTMLDivElement>(null)
   const { configs } = useContext(ConfigContext)
   const { theme } = configs
@@ -56,17 +56,19 @@ function App() {
           <div className='panel-split'>
             <NoteSideBar />
 
-            {tab.scratchpad !== true
-              ? <NoteEditor />
-              : <div className='codemirror'>
-                <Editor
-                  noteId={scratchpad.id}
-                  text={scratchpad.text}
-                  scratchpad={true}
-                />
+            {tab !== 'scratchpad'
+              ? <CodeMirror />
+              : (
+                <div className='codemirror'>
+                  <Editor
+                    noteId={scratchpad.id}
+                    text={scratchpad.text}
+                    scratchpad={true}
+                  />
 
-                <NoteMenuBar />
-              </div>
+                  <NoteMenuBar />
+                </div>
+              )
             }
           </div>
         </div>

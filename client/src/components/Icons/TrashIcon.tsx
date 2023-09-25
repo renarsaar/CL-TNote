@@ -1,5 +1,5 @@
 type Props = {
-  className: 'app-sidebar-icon' | 'note-menu-bar-icon';
+  className: 'app-sidebar-icon' | 'note-menu-bar-icon' | 'options-context-icon';
   width: number;
   height: number;
 }

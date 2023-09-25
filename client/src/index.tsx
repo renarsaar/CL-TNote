@@ -6,6 +6,7 @@ import App from './components/App';
 import reportWebVitals from './reportWebVitals';
 import ResizerProvider from './context/ResizerContext';
 import ConfigsProvider from './context/ConfigContext';
+import ActiveTooltipProvider from './context/ActiveTooltipContext';
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);
@@ -15,7 +16,9 @@ root.render(
     <Provider store={store}>
       <ConfigsProvider>
         <ResizerProvider>
-          <App />
+          <ActiveTooltipProvider>
+            <App />
+          </ActiveTooltipProvider>
         </ResizerProvider>
       </ConfigsProvider>
     </Provider>
