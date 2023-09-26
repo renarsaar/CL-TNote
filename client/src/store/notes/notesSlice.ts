@@ -178,6 +178,12 @@ const noteSlice = createSlice({
 
       localStorage.setItem('notes', JSON.stringify({ ...state }))
     },
+    clearTrashNotes: (state: NoteState) => {
+      state.notes = state.notes.filter((note) => note.trash !== true)
+      state.selectedNote = null
+
+      localStorage.setItem('notes', JSON.stringify({ ...state }))
+    },
     pruneNotes: (state: NoteState) => {
       if (state.notes.length === 0 || state.selectedNote === null) {
         return
@@ -201,7 +207,7 @@ const noteSlice = createSlice({
 })
 
 export const {
-  getNotes, setSelectedNote, createNote, editNoteText, toggleFavorite, toggleTrash, deleteNote, pruneNotes
+  getNotes, setSelectedNote, createNote, editNoteText, toggleFavorite, toggleTrash, deleteNote, clearTrashNotes, pruneNotes
 } = noteSlice.actions
 export const selectNotes = (state: RootState) => state.notes.notes
 export const selectSelectedNote = (state: RootState) => state.notes.selectedNote

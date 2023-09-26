@@ -1,5 +1,7 @@
 .note-sidebar-header {
-  padding: 0 0.5rem;
+  display: flex;
+  align-items: center;
+  padding: 0 0.4rem;
   background: #e5e5e5;
   border-bottom: 1px solid #ccc;
 
@@ -8,13 +10,29 @@
     outline: 0;
     height: 35px;
     margin: .5rem 0;
-    padding: 0.5rem;
-
     border: 1px solid #D0D0D0;
 
     &:focus {
       border: 1px solid #99b7f9;
       box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
+    }
+  }
+
+  .empty-trash-button {
+    cursor: pointer;
+    color: #404040;
+    background-color: #D1D1D1;
+    padding: 0 .7rem;
+    height: 35px;
+    margin: .5rem 0 .5rem .5rem;
+    font-size: .85rem;
+    font-weight: 500;
+    border: none;
+    border-radius: .3rem;
+
+    &:hover {
+      color: #FFF;
+      background-color: #f2777a;
     }
   }
 }
