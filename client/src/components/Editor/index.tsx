@@ -20,7 +20,7 @@ const Editor = ({ noteId, text, scratchpad }: Props) => {
   const dispatch = useAppDispatch()
   const { configs: { codeMirrorOptions } } = useContext<ConfigContextState>(ConfigContext)
   const basicSetupOptions: BasicSetupOptions = {
-    lineNumbers: codeMirrorOptions.lineNUmbers,
+    lineNumbers: codeMirrorOptions.lineNumbers,
     highlightActiveLine: codeMirrorOptions.highlightActiveLine,
     highlightActiveLineGutter: codeMirrorOptions.highlightActiveLine,
     foldGutter: false,
