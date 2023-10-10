@@ -1,12 +1,14 @@
-import React from 'react';
-import { createRoot } from 'react-dom/client';
-import { Provider } from 'react-redux';
-import { store } from './store/store';
-import App from './components/App';
-import reportWebVitals from './reportWebVitals';
-import ResizerProvider from './context/ResizerContext';
-import ConfigsProvider from './context/ConfigContext';
-import ActiveTooltipProvider from './context/ActiveTooltipContext';
+import React from 'react'
+import { createRoot } from 'react-dom/client'
+import { Provider } from 'react-redux'
+import { store } from './store/store'
+import App from './components/App'
+import reportWebVitals from './reportWebVitals'
+import ResizerProvider from './context/ResizerContext'
+import ConfigsProvider from './context/ConfigContext'
+import ActiveNoteTooltipProvider from './context/ActiveNoteTooltipContext'
+import ActiveCategoryTooltipProvider from './context/ActiveCategoryTooltipContext'
+import ActiveCategoryRenameFormContext from './context/ActiveCategoryRenameFormContext'
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);
@@ -16,9 +18,13 @@ root.render(
     <Provider store={store}>
       <ConfigsProvider>
         <ResizerProvider>
-          <ActiveTooltipProvider>
-            <App />
-          </ActiveTooltipProvider>
+          <ActiveNoteTooltipProvider>
+            <ActiveCategoryTooltipProvider>
+              <ActiveCategoryRenameFormContext>
+                <App />
+              </ActiveCategoryRenameFormContext>
+            </ActiveCategoryTooltipProvider>
+          </ActiveNoteTooltipProvider>
         </ResizerProvider>
       </ConfigsProvider>
     </Provider>

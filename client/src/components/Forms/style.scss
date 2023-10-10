@@ -1,0 +1,33 @@
+.category-form,
+.category-form-rename {
+  input {
+    background-color: #202020;
+    color: #EEE;
+    line-height: 1;
+    border-radius: 0px;
+    outline: none;
+    border: 0;
+    font-size: .9rem;
+    color: #FFF;
+
+    &:focus {
+      box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, .25);
+    }
+  }
+}
+
+.category-form {
+  input {
+    margin: .5rem .5rem .5rem 1rem;
+    padding: .5rem;
+    width: 150px;
+  }
+}
+
+.category-form-rename {
+  input {
+    margin: .5rem .5rem .5rem 0;
+    padding: .1rem;
+    max-width: 100px;
+  }
+}

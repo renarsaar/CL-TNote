@@ -22,7 +22,7 @@ const noteSlice = createSlice({
       const notes: string | null = localStorage.getItem('notes')
 
       if (notes === null) {
-        const newNotes: Note[] = [
+        const testNotes: Note[] = [
           {
             id: uuidv4(),
             category: null,
@@ -31,11 +31,11 @@ const noteSlice = createSlice({
             trash: false,
             created: moment().toISOString(true),
             lastUpdated: null
-          },
+          }
         ]
 
-        state.notes = newNotes
-        state.selectedNote = newNotes[0]
+        state.notes = testNotes
+        state.selectedNote = testNotes[0]
 
         localStorage.setItem('notes', JSON.stringify({ ...state }))
       } else {
@@ -51,7 +51,7 @@ const noteSlice = createSlice({
         state.selectedNote = newNotes.notes[0]
       }
     },
-    setSelectedNote: (state: NoteState, action: PayloadAction<{ note: Note }>) => {
+    setSelectedNote: (state: NoteState, action: PayloadAction<{ note: Note | null | undefined }>) => {
       const { note } = action.payload
 
       !note
@@ -60,11 +60,11 @@ const noteSlice = createSlice({
 
       localStorage.setItem('notes', JSON.stringify({ ...state }))
     },
-    createNote: (state: NoteState, action: PayloadAction<{ favorite: boolean }>) => {
-      const { favorite } = action.payload
+    createNote: (state: NoteState, action: PayloadAction<{ favorite: boolean, category: string | null }>) => {
+      const { favorite, category } = action.payload
       const note: Note = {
         id: uuidv4(),
-        category: null,
+        category,
         text: '',
         favorite,
         trash: false,
@@ -167,13 +167,10 @@ const noteSlice = createSlice({
 
       state.notes = state.notes.filter((note) => note.id !== noteId)
 
-      if (state.selectedNote !== null) {
-        switch (true) {
-          case tab === 'trash':
-            const trashNotes = state.notes.filter((note) => note.trash === true)
+      if (state.selectedNote !== null && tab === 'trash') {
+        const trashNotes = state.notes.filter((note) => note.trash === true)
 
-            state.selectedNote = trashNotes[0] || null
-        }
+        state.selectedNote = trashNotes[0] || null
       }
 
       localStorage.setItem('notes', JSON.stringify({ ...state }))
@@ -181,6 +178,31 @@ const noteSlice = createSlice({
     clearTrashNotes: (state: NoteState) => {
       state.notes = state.notes.filter((note) => note.trash !== true)
       state.selectedNote = null
+
+      localStorage.setItem('notes', JSON.stringify({ ...state }))
+    },
+    setNoteCategory: (state: NoteState, action: PayloadAction<{ categoryId: string | null, noteId: string }>) => {
+      const { categoryId, noteId } = action.payload
+      const findNote = state.notes.find((note) => note.id === noteId)
+
+      if (findNote === undefined) return
+
+      if (findNote.id === state.selectedNote?.id) {
+        state.selectedNote.category = categoryId
+      }
+
+      findNote.category = categoryId
+
+      localStorage.setItem('notes', JSON.stringify({ ...state }))
+    },
+    removeNotesCategory: (state: NoteState, action: PayloadAction<{ categoryId: string }>) => {
+      const { categoryId } = action.payload
+
+      state.notes.forEach((note) => {
+        if (note.category === categoryId) {
+          note.category = null
+        }
+      })
 
       localStorage.setItem('notes', JSON.stringify({ ...state }))
     },
@@ -207,7 +229,7 @@ const noteSlice = createSlice({
 })
 
 export const {
-  getNotes, setSelectedNote, createNote, editNoteText, toggleFavorite, toggleTrash, deleteNote, clearTrashNotes, pruneNotes
+  getNotes, setSelectedNote, createNote, editNoteText, toggleFavorite, toggleTrash, deleteNote, clearTrashNotes, setNoteCategory, removeNotesCategory, pruneNotes
 } = noteSlice.actions
 export const selectNotes = (state: RootState) => state.notes.notes
 export const selectSelectedNote = (state: RootState) => state.notes.selectedNote

@@ -6,10 +6,12 @@ import { createNote } from '../../store/notes/notesSlice'
 import NewNoteIcon from '../Icons/NewNoteIcon'
 import '../../assets/_variables.scss'
 import './style.scss'
+import { selectSelectedCategory } from '../../store/categories/categorySlice'
 
 const NewNoteButton = () => {
   const dispatch = useAppDispatch()
   const navigation = useAppSelector(selectNavigation)
+  const selectedCategory = useAppSelector(selectSelectedCategory)
   const { configs } = useContext(ConfigContext)
   const { theme } = configs
 
@@ -18,26 +20,27 @@ const NewNoteButton = () => {
 
     switch (true) {
       case tab === 'favorites':
-        dispatch(createNote({ favorite: true }))
+        dispatch(createNote({ favorite: true, category: null }))
         break;
 
       case tab === 'notes':
-        dispatch(createNote({ favorite: false }))
+        dispatch(createNote({ favorite: false, category: null }))
         break;
 
       case tab === 'scratchpad':
         dispatch(setNavigation('notes'))
-        dispatch(createNote({ favorite: false }))
+        dispatch(createNote({ favorite: false, category: null }))
 
         break;
 
       case tab === 'trash':
         dispatch(setNavigation('notes'))
-        dispatch(createNote({ favorite: false }))
+        dispatch(createNote({ favorite: false, category: null }))
 
         break;
 
       default:
+        dispatch(createNote({ favorite: false, category: selectedCategory!.id }))
         break;
     }
   }

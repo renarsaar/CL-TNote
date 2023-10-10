@@ -1,26 +1,28 @@
 import { useContext } from 'react'
-import { useAppDispatch, useAppSelector } from '../../../../hooks/hooks'
-import { deleteNote, toggleFavorite, toggleTrash } from '../../../../store/notes/notesSlice'
-import FavoritesIcon from '../../../Icons/FavoritesIcon'
-import TrashIcon from '../../../Icons/TrashIcon'
-import DownloadIcon from '../../../Icons/DownloadIcon'
-import ClipboardIcon from '../../../Icons/ClipboardIcon'
-import RestoreFromTrashIcon from '../../../Icons/RestoreFromTrashIcon'
-import DeleteIcon from '../../../Icons/DeleteIcon'
-import { selectNavigation } from '../../../../store/navigation/navigationSlice'
-import { ActiveTooltipContext } from '../../../../context/ActiveTooltipContext'
+import { useAppDispatch, useAppSelector } from '../../../../../hooks/hooks'
+import { deleteNote, getNotes, setNoteCategory, toggleFavorite, toggleTrash } from '../../../../../store/notes/notesSlice'
+import FavoritesIcon from '../../../../Icons/FavoritesIcon'
+import TrashIcon from '../../../../Icons/TrashIcon'
+import DownloadIcon from '../../../../Icons/DownloadIcon'
+import ClipboardIcon from '../../../../Icons/ClipboardIcon'
+import RestoreFromTrashIcon from '../../../../Icons/RestoreFromTrashIcon'
+import DeleteIcon from '../../../../Icons/DeleteIcon'
+import { selectNavigation, setNavigation } from '../../../../../store/navigation/navigationSlice'
+import { ActiveNoteTooltipContext } from '../../../../../context/ActiveNoteTooltipContext'
 import './style.scss'
+import CloseIcon from '../../../../Icons/CloseIcon'
 
 type Props = {
   noteId: string
+  noteCategory: string | null
   isTrash: boolean
   isFavorite: boolean
 }
 
-export const NoteTooltipOptions = ({ noteId, isTrash, isFavorite }: Props) => {
+export const NoteTooltipOptions = ({ noteId, noteCategory, isTrash, isFavorite }: Props) => {
   const dispatch = useAppDispatch()
   const { tab } = useAppSelector(selectNavigation)
-  const { clearActiveNoteId } = useContext(ActiveTooltipContext)
+  const { clearActiveNoteId } = useContext(ActiveNoteTooltipContext)
 
   const markAsFavorite = () => {
     dispatch(toggleFavorite({ noteId, tab }))
@@ -34,6 +36,11 @@ export const NoteTooltipOptions = ({ noteId, isTrash, isFavorite }: Props) => {
 
   const removePermanently = () => {
     dispatch(deleteNote({ noteId, tab }))
+    clearActiveNoteId()
+  }
+
+  const removeCategory = () => {
+    dispatch(setNoteCategory({ categoryId: null, noteId }))
     clearActiveNoteId()
   }
 
@@ -84,6 +91,18 @@ export const NoteTooltipOptions = ({ noteId, isTrash, isFavorite }: Props) => {
           </>
         }
       </div>
+
+      {noteCategory !== null &&
+        <div
+          role='button'
+          className='options-nav-item'
+          onClick={removeCategory}
+        >
+          <CloseIcon className='options-context-icon' width={15} height={15} />
+
+          Remove category
+        </div>
+      }
 
       <div
         role='button'

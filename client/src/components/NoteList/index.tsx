@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
 import { selectNotes } from '../../store/notes/notesSlice'
+import { selectNavigation } from '../../store/navigation/navigationSlice'
+import { selectSelectedCategory } from '../../store/categories/categorySlice'
 import NoteItem from './NoteItem'
 import { Note } from '../../interfaces/Note'
-import { selectNavigation } from '../../store/navigation/navigationSlice'
 import './style.scss'
 
 export default function NoteList() {
@@ -11,6 +12,7 @@ export default function NoteList() {
   const navigation = useAppSelector(selectNavigation)
   const notes: Note[] = useAppSelector(selectNotes)
   const [filteredNotes, setFilteredNotes] = useState<Note[]>(notes)
+  const selectedCategory = useAppSelector(selectSelectedCategory)
 
   useEffect(() => {
     const { tab } = navigation
@@ -32,15 +34,25 @@ export default function NoteList() {
 
         break
 
-      default:
+      case tab === 'notes':
         const nonTrashNotes = notes.filter((note) => note.trash !== true)
 
         setFilteredNotes(() => nonTrashNotes)
 
         break
-    }
 
-  }, [navigation, notes, dispatch])
+      default:
+        if (!selectedCategory?.id) {
+          setFilteredNotes(() => notes)
+        } else {
+          const categorizedNotes = notes.filter((note) => note.category === selectedCategory?.id)
+
+          setFilteredNotes(() => categorizedNotes)
+        }
+
+        break
+    }
+  }, [navigation, notes, dispatch, selectedCategory?.id])
 
   return (
     <div className="note-list">
