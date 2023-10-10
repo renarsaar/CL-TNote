@@ -1,18 +1,21 @@
 import { useContext, useEffect, useRef } from 'react'
-import { ActiveTooltipContext } from '../../../context/ActiveTooltipContext'
+import { ActiveNoteTooltipContext } from '../../../../context/ActiveNoteTooltipContext'
 import MoveToCategorySelect from './MoveToCategorySelect'
 import { NoteTooltipOptions } from './NoteTooltipOptions/NoteTooltipOptions'
 import './style.scss'
 
 type Props = {
   noteId: string
+  noteCategory: string | null
   isTrash: boolean
   isFavorite: boolean
+  tooltipX: number
+  tooltipY: number
 }
 
-const NoteTooltip = ({ noteId, isTrash, isFavorite }: Props) => {
+const NoteTooltip = ({ noteId, noteCategory, isTrash, isFavorite, tooltipX, tooltipY }: Props) => {
   const ref = useRef<HTMLDivElement>(null)
-  const { activeNoteId, clearActiveNoteId } = useContext(ActiveTooltipContext)
+  const { activeNoteId, clearActiveNoteId } = useContext(ActiveNoteTooltipContext)
   const isVisible: boolean = noteId === activeNoteId
 
   useEffect(() => {
@@ -36,14 +39,14 @@ const NoteTooltip = ({ noteId, isTrash, isFavorite }: Props) => {
 
   return (
     <div
-      style={{ visibility: isVisible ? 'visible' : 'hidden' }}
+      style={{ visibility: isVisible ? 'visible' : 'hidden', top: tooltipY, left: tooltipX }}
       className='options-context-menu'
       onClick={onClick}
       ref={ref}
     >
-      <MoveToCategorySelect />
+      <MoveToCategorySelect noteId={noteId} />
 
-      <NoteTooltipOptions noteId={noteId} isTrash={isTrash} isFavorite={isFavorite} />
+      <NoteTooltipOptions noteId={noteId} noteCategory={noteCategory} isTrash={isTrash} isFavorite={isFavorite} />
     </div>
   )
 }

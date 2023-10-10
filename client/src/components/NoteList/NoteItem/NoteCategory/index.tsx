@@ -1,35 +1,31 @@
 import { useEffect, useState } from 'react'
-import { Note } from '../../../../interfaces/Note'
-import CategoryIcon from '../../../Icons/CategoryIcon'
-import NoteIcon from '../../../Icons/NoteIcon'
 import { useAppSelector } from '../../../../hooks/hooks'
 import { selectCategories } from '../../../../store/categories/categorySlice'
+import CategoryIcon from '../../../Icons/CategoryIcon'
+import NoteIcon from '../../../Icons/NoteIcon'
 
 type Props = {
-  note: Note
+  category: string | null
 }
 
-const Category = ({ note }: Props) => {
+const NoteCategory = ({ category }: Props) => {
   const categories = useAppSelector(selectCategories)
-  const [category, setCategory] = useState<string | null>(null)
+  const [categoryName, setCategoryName] = useState<string | null>(null)
 
   useEffect(() => {
-    categories.forEach((item) => {
-      if (item.id === note.category) {
-        setCategory(item.name)
-      }
-    })
-  }, [categories, note.category])
+    const findCategory = categories.find((c) => c.id === category)
 
+    setCategoryName(findCategory?.name || null)
+  }, [categories, category])
 
   return (
     <div className="note-category">
-      {category !== null
+      {categoryName !== null
         ? (
           <>
             <CategoryIcon className='note-sidebar-icon' width={15} height={15} />
 
-            {category}
+            {categoryName}
           </>
         )
         : (
@@ -44,4 +40,4 @@ const Category = ({ note }: Props) => {
   )
 }
 
-export default Category
+export default NoteCategory

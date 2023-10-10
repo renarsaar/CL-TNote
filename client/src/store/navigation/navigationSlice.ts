@@ -1,10 +1,8 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { RootState } from '../store'
 
-type TabTypes = 'scratchpad' | 'notes' | 'favorites' | 'trash'
-
 type NavigationState = {
-  tab: TabTypes
+  tab: string
 }
 
 const initialState: NavigationState = {
@@ -15,7 +13,7 @@ const navigationSlice = createSlice({
   name: 'navigation',
   initialState,
   reducers: {
-    setNavigation: (state: NavigationState, action: PayloadAction<TabTypes>) => {
+    setNavigation: (state: NavigationState, action: PayloadAction<string>) => {
       if (state.tab === action.payload) return
 
       state.tab = action.payload

@@ -1,10 +1,10 @@
 type Props = {
-  className?: 'options-context-icon'
-  width: number
-  height: number
+  className: 'options-context-icon';
+  width: number;
+  height: number;
 }
 
-export default function CloseIcon({ className, width, height }: Props) {
+const PencilIcon = ({ className, width, height }: Props) => {
   return (
     <svg
       xmlns='http://www.w3.org/2000/svg'
@@ -16,10 +16,10 @@ export default function CloseIcon({ className, width, height }: Props) {
       strokeWidth='2'
       strokeLinecap='round'
       strokeLinejoin='round'
-      className={className}
-    >
-      <line x1='18' y1='6' x2='6' y2='18'></line>
-      <line x1='6' y1='6' x2='18' y2='18'></line>
+      className={className}>
+      <path d='M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z'></path>
     </svg>
   )
 }
+
+export default PencilIcon

@@ -10,25 +10,28 @@ import FavoritesIcon from '../../components/Icons/FavoritesIcon'
 import TrashIcon from '../../components/Icons/TrashIcon'
 import AppSidebarButton from '../../components/Buttons/AppSidebarButton'
 import NewNoteButton from '../../components/Buttons/NewNoteButton'
-import Categories from '../../components/Categories'
+import CategoryList from '../../components/CategoryList'
 import Resizer from '../../components/Reziser'
 
 import './style.scss'
+import { setSelectedCategory } from '../../store/categories/categorySlice'
 
 const AppSideBar = () => {
   const dispatch = useAppDispatch()
+  const { appSideBarWidth } = useContext(ResizerContext)
   const { tab } = useAppSelector(selectNavigation)
   const notes = useAppSelector(selectNotes)
-  const { appSideBarWidth } = useContext(ResizerContext);
 
   const toggleScratchpad = () => {
     dispatch(pruneNotes())
     dispatch(setNavigation('scratchpad'))
+    dispatch(setSelectedCategory({ category: null }))
   }
 
   const toggleNotes = () => {
     dispatch(pruneNotes())
     dispatch(setNavigation('notes'))
+    dispatch(setSelectedCategory({ category: null }))
 
     const nonTrashNotes = notes.filter((note) => note.trash !== true)
 
@@ -38,6 +41,7 @@ const AppSideBar = () => {
   const toggleFavorites = () => {
     dispatch(pruneNotes())
     dispatch(setNavigation('favorites'))
+    dispatch(setSelectedCategory({ category: null }))
 
     const favoriteNotes = notes.filter((note) => note.favorite === true && note.trash !== true)
 
@@ -47,6 +51,7 @@ const AppSideBar = () => {
   const toggleTrash = () => {
     dispatch(pruneNotes())
     dispatch(setNavigation('trash'))
+    dispatch(setSelectedCategory({ category: null }))
 
     const trashNotes = notes.filter((note) => note.trash === true)
 
@@ -107,7 +112,7 @@ const AppSideBar = () => {
             />
           </AppSidebarButton>
 
-          <Categories />
+          <CategoryList />
         </section>
       </aside>
 

@@ -1,5 +1,5 @@
 type Props = {
-  className: 'note-sidebar-icon' | 'note-sidebar-icon-active'
+  className: 'app-sidebar-context-icon' | 'note-sidebar-icon' | 'note-sidebar-icon-active'
   width: number
   height: number
   onClick: (e: React.MouseEvent<SVGElement>) => void

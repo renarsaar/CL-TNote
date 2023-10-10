@@ -9,10 +9,22 @@ export type ConfigContextState = {
   addConfig: (prevConfig: any, config: ConfigObject) => void
 }
 
-export type ActiveTooltipState = {
+export type ActiveNoteTooltipState = {
   activeNoteId: string | null
   setActiveNoteId: Dispatch<SetStateAction<string | null>>
   clearActiveNoteId: () => void
+}
+
+export type ActiveCategoryTooltipState = {
+  activeCategoryId: string | null
+  setActiveCategoryId: Dispatch<SetStateAction<string | null>>
+  clearActiveCategoryId: () => void
+}
+
+export type ActiveCategoryFormState = {
+  activeCategoryFormId: string | null
+  setActiveCategoryFormId: Dispatch<SetStateAction<string | null>>
+  clearActiveCategoryFormId: () => void
 }
 
 export type ResizerContextState = {

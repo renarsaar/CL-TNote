@@ -1,24 +1,24 @@
 import { useState, createContext, FC, ReactElement } from 'react'
-import { ActiveTooltipState } from './types'
+import { ActiveNoteTooltipState } from './types'
 
-const contextDefaultValues: ActiveTooltipState = {
+const contextDefaultValues: ActiveNoteTooltipState = {
   activeNoteId: null,
   setActiveNoteId: () => { },
   clearActiveNoteId: () => { }
 }
 
-export const ActiveTooltipContext = createContext<ActiveTooltipState>(
+export const ActiveNoteTooltipContext = createContext<ActiveNoteTooltipState>(
   contextDefaultValues
 )
 
 type ProviderProps = { children: ReactElement }
 
-const ActiveTooltipProvider: FC<ProviderProps> = ({ children }) => {
+const ActiveNoteTooltipProvider: FC<ProviderProps> = ({ children }) => {
   const [activeNoteId, setActiveNoteId] = useState<string | null>(null)
   const clearActiveNoteId = () => setActiveNoteId(null)
 
   return (
-    <ActiveTooltipContext.Provider
+    <ActiveNoteTooltipContext.Provider
       value={{
         activeNoteId,
         setActiveNoteId,
@@ -26,8 +26,8 @@ const ActiveTooltipProvider: FC<ProviderProps> = ({ children }) => {
       }}
     >
       {children}
-    </ActiveTooltipContext.Provider>
+    </ActiveNoteTooltipContext.Provider>
   )
 }
 
-export default ActiveTooltipProvider
+export default ActiveNoteTooltipProvider

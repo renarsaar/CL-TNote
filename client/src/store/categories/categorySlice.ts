@@ -3,79 +3,105 @@ import { v4 as uuidv4 } from 'uuid';
 import { RootState } from '../store';
 import { Category } from '../../interfaces/Category';
 
-type CategoryState = Category[]
+type CategoryState = {
+  categories: Category[],
+  selectedCategory: Category | null
+}
 
-const initialState: CategoryState = []
+const initialState: CategoryState = {
+  categories: [],
+  selectedCategory: null
+}
 
 const categorySlice = createSlice({
   name: 'category',
   initialState,
   reducers: {
     getCategories: (state: CategoryState) => {
-      const categories = localStorage.getItem('categories')
-      const category: Category = {
-        id: 'bfaa5cdc-283a-48ad-baa0-614fcf277fbf',
-        name: 'Bugs'
-      }
+      const categories: string | null = localStorage.getItem('categories')
 
       if (categories === null) {
-        localStorage.setItem('categories', JSON.stringify([category]))
+        const testCategories: Category[] = [
+          {
+            id: uuidv4(),
+            name: 'Bugs'
+          },
+          {
+            id: uuidv4(),
+            name: 'Folder'
+          }
+        ]
 
-        state.push(category)
+        state.categories = testCategories
+        state.selectedCategory = null
+
+        localStorage.setItem('categories', JSON.stringify({ ...state }))
       } else {
-        state = JSON.parse(categories)
+        const newCategories: CategoryState = JSON.parse(categories)
+
+        state.categories = newCategories.categories
+        state.selectedCategory = newCategories.selectedCategory
       }
-
-      return state
     },
-    createCategory: (state: CategoryState, action: PayloadAction<{ name: string }>) => {
-      const { name } = action.payload
+    setSelectedCategory: (state: CategoryState, action: PayloadAction<{ category: Category | null | undefined }>) => {
+      const { category } = action.payload
 
-      state.forEach((category) => {
-        if (category.name === name) return
+      !category
+        ? state.selectedCategory = null
+        : state.selectedCategory = category
+
+      localStorage.setItem('categories', JSON.stringify({ ...state }))
+    },
+    createCategory: (state: CategoryState, action: PayloadAction<{ value: string }>) => {
+      const value = action.payload.value.trim()
+
+      if (value === '') return
+
+      // Check if category already exists
+      state.categories.forEach((category) => {
+        if (category.name === value) return
       })
 
       const category: Category = {
         id: uuidv4(),
-        name
+        name: value
       }
 
-      localStorage.setItem('categories', JSON.stringify({
-        ...state,
-        category
-      }))
+      state.categories.push(category)
+
+      localStorage.setItem('categories', JSON.stringify({ ...state }))
     },
-    editCategory: (state: CategoryState, action: PayloadAction<{ category: Category, value: string }>) => {
-      const { category, value } = action.payload
-      const duplicate = state.some((item) => item.name === value)
+    editCategory: (state: CategoryState, action: PayloadAction<{ categoryId: string | '', value: string }>) => {
+      const { categoryId, value } = action.payload
+
+      if (value === '') return
+
+      const duplicate = state.categories.some((category) => {
+        return category.name === value
+      })
 
       if (duplicate === true) return
 
-      state.map((item) => {
-        if (category.id === item.id) {
-          item.name = value
-        }
+      const findCategory = state.categories.find((category) => category.id === categoryId)
 
-        return item
-      })
+      if (findCategory === undefined) return
 
-      localStorage.setItem('categories', JSON.stringify({
-        ...state
-      }))
+      findCategory.name = value
+      localStorage.setItem('categories', JSON.stringify({ ...state }))
     },
-    deleteCategory: (state: CategoryState, action: PayloadAction<{ category: Category }>) => {
-      const { category } = action.payload
-      const index = state.indexOf(category)
+    deleteCategory: (state: CategoryState, action: PayloadAction<{ id: string }>) => {
+      const { id } = action.payload
 
-      state.splice(index, 1)
+      state.categories = state.categories.filter((category) => category.id !== id)
 
-      localStorage.setItem('categories', JSON.stringify({
-        ...state
-      }))
+      if (state.selectedCategory?.id === id) state.selectedCategory = state.categories[0]
+
+      localStorage.setItem('categories', JSON.stringify({ ...state }))
     }
   }
 })
 
-export const { getCategories, createCategory, editCategory, deleteCategory } = categorySlice.actions
-export const selectCategories = (state: RootState) => state.categories
+export const { getCategories, setSelectedCategory, createCategory, editCategory, deleteCategory } = categorySlice.actions
+export const selectCategories = (state: RootState) => state.categories.categories
+export const selectSelectedCategory = (state: RootState) => state.categories.selectedCategory
 export default categorySlice.reducer

@@ -12,15 +12,15 @@ import NoteMenuBar from '../layouts/NoteMenuBar'
 import '../assets/style.scss'
 
 const App = () => {
+  const splitPanelElement = useRef<HTMLDivElement>(null)
   const dispatch = useAppDispatch()
   const { tab } = useAppSelector(selectNavigation)
-  const splitPanelElement = useRef<HTMLDivElement>(null)
+  const scratchpad = useAppSelector(selectScratchpad)
   const { configs } = useContext(ConfigContext)
   const { theme } = configs
   const {
     appSideBarDrag, noteSideBarDrag, handleAppSideBarWidth, handleNoteSideBarWidth, appSideBarWidth
   } = useContext(ResizerContext)
-  const scratchpad = useAppSelector(selectScratchpad)
 
   useEffect(() => {
     dispatch(getNotes())

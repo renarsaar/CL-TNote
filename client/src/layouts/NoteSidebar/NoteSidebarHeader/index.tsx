@@ -1,6 +1,6 @@
 import { useContext } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks'
-import { ActiveTooltipContext } from '../../../context/ActiveTooltipContext'
+import { ActiveNoteTooltipContext } from '../../../context/ActiveNoteTooltipContext'
 import { selectNavigation } from '../../../store/navigation/navigationSlice'
 import { clearTrashNotes, selectNotes } from '../../../store/notes/notesSlice'
 import './style.scss'
@@ -8,7 +8,7 @@ import './style.scss'
 const NoteSidebarHeader = () => {
   const dispatch = useAppDispatch()
   const { tab } = useAppSelector(selectNavigation)
-  const { clearActiveNoteId } = useContext(ActiveTooltipContext)
+  const { clearActiveNoteId } = useContext(ActiveNoteTooltipContext)
   const notes = useAppSelector(selectNotes)
   const trashNotes = notes.filter((note) => note.trash === true)
 
