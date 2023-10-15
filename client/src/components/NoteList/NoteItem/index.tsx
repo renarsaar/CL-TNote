@@ -5,21 +5,12 @@ import NoteCategory from './NoteCategory'
 import NoteOptionsButton from './NoteOptionsButton'
 import FavoritesIcon from '../../Icons/FavoritesIcon'
 import NoteTooltip from './NoteTooltip'
+import NoteTitle from './NoteTitle'
 import { Note } from '../../../interfaces/Note'
 import './style.scss'
 
 type Props = {
   note: Note
-}
-
-const handleTitle = (text: string): string => {
-  let title: string = text
-  title = title.split('\n')[0]
-  title = title.split('#')[0]
-  title = title.substring(0, 40)
-
-  if (title.trim().length === 0) return 'New note'
-  return title
 }
 
 const NoteItem = ({ note }: Props) => {
@@ -57,7 +48,7 @@ const NoteItem = ({ note }: Props) => {
               )}
             </div>
 
-            <div className="truncate-text">{handleTitle(text)}</div>
+            <NoteTitle noteId={note.id} text={text} />
           </div>
 
           <NoteOptionsButton

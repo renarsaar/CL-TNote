@@ -1,0 +1,19 @@
+.truncate-text {
+  overflow: hidden;
+  text-overflow: clip;
+
+  span {
+    font-size: .85rem;
+    letter-spacing: .25px;
+  }
+
+  .char-highlighted {
+    background-color: #5183f5;
+    color: #FFF;
+  }
+
+  .char-highlighted-selectedNote {
+    background-color: #FFF;
+    color: #5183f5;
+  }
+}
