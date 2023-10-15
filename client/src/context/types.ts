@@ -27,6 +27,11 @@ export type ActiveCategoryFormState = {
   clearActiveCategoryFormId: () => void
 }
 
+export type SearchState = {
+  searchTerm: string
+  setSearchTerm: Dispatch<SetStateAction<string>>
+}
+
 export type ResizerContextState = {
   appSideBarDrag: boolean
   appSideBarWidth: number

@@ -3,6 +3,7 @@ import { ResizerContext } from '../../context'
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
 import { pruneNotes, selectNotes, setSelectedNote } from '../../store/notes/notesSlice'
 import { selectNavigation, setNavigation } from '../../store/navigation/navigationSlice'
+import { setSelectedCategory } from '../../store/categories/categorySlice'
 
 import ScratchpadIcon from '../../components/Icons/ScratchpadIcon'
 import NoteIcon from '../../components/Icons/NoteIcon'
@@ -14,7 +15,6 @@ import CategoryList from '../../components/CategoryList'
 import Resizer from '../../components/Reziser'
 
 import './style.scss'
-import { setSelectedCategory } from '../../store/categories/categorySlice'
 
 const AppSideBar = () => {
   const dispatch = useAppDispatch()

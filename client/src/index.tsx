@@ -8,7 +8,8 @@ import ResizerProvider from './context/ResizerContext'
 import ConfigsProvider from './context/ConfigContext'
 import ActiveNoteTooltipProvider from './context/ActiveNoteTooltipContext'
 import ActiveCategoryTooltipProvider from './context/ActiveCategoryTooltipContext'
-import ActiveCategoryRenameFormContext from './context/ActiveCategoryRenameFormContext'
+import ActiveCategoryRenameFormProvider from './context/ActiveCategoryRenameFormContext'
+import SearchProvider from './context/SearchContext'
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);
@@ -20,9 +21,11 @@ root.render(
         <ResizerProvider>
           <ActiveNoteTooltipProvider>
             <ActiveCategoryTooltipProvider>
-              <ActiveCategoryRenameFormContext>
-                <App />
-              </ActiveCategoryRenameFormContext>
+              <ActiveCategoryRenameFormProvider>
+                <SearchProvider>
+                  <App />
+                </SearchProvider>
+              </ActiveCategoryRenameFormProvider>
             </ActiveCategoryTooltipProvider>
           </ActiveNoteTooltipProvider>
         </ResizerProvider>
