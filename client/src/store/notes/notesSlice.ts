@@ -118,6 +118,9 @@ const noteSlice = createSlice({
             }
 
             break
+
+          case tab === 'NoteMenuBar':
+            state.selectedNote.favorite = !state.selectedNote.favorite
         }
       }
 
