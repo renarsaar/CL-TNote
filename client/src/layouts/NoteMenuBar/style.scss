@@ -11,6 +11,7 @@
   color: #404040;
   background-color: #E5E5E5;
   border-top: 1px solid #D8D8D8;
+  box-shadow: -1.5px 0px 0px 0px #E5E5E5;
 
   nav {
     display: flex;
@@ -24,12 +25,23 @@
       border: none;
 
       &:hover {
-        color: #404040;
         background: #d8d8d8;
+      }
+
+      &:hover .note-menu-bar-icon {
+        stroke: #404040;
+      }
+
+      &:hover .trash {
+        stroke: #E91A1F;
       }
 
       .note-menu-bar-icon {
         stroke: #666;
+      }
+
+      .note-menu-bar-icon-favorited {
+        stroke: #5183f5;
       }
     }
   }

@@ -16,15 +16,15 @@ export default function NavOptions({ }: Props) {
       <LastSynced />
 
       <button className='note-menu-bar-button'>
-        <SyncNotesIcon className='note-menu-bar-icon' width={20} height={20} />
+        <SyncNotesIcon className='note-menu-bar-icon' width={18} height={18} />
       </button>
 
       <button className='note-menu-bar-button'>
-        <DarkModeIcon className='note-menu-bar-icon' width={20} height={20} />
+        <DarkModeIcon className='note-menu-bar-icon' width={18} height={18} />
       </button>
 
       <button className='note-menu-bar-button' onClick={toggle}>
-        <ConfigsIcon className='note-menu-bar-icon' width={20} height={20} />
+        <ConfigsIcon className='note-menu-bar-icon' width={18} height={18} />
         <ConfigsModal isShowing={isShowing} hide={toggle} />
       </button>
     </nav>
