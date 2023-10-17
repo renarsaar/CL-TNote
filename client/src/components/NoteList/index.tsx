@@ -1,11 +1,14 @@
+import moment from 'moment'
 import { useContext, useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
 import { selectNotes } from '../../store/notes/notesSlice'
 import { selectNavigation } from '../../store/navigation/navigationSlice'
 import { selectSelectedCategory } from '../../store/categories/categorySlice'
+import { SearchContext } from '../../context/SearchContext'
+import { ConfigContext } from '../../context/ConfigContext'
+import { ConfigContextState } from '../../context/types'
 import NoteItem from './NoteItem'
 import { Note } from '../../interfaces/Note'
-import { SearchContext } from '../../context/SearchContext'
 import './style.scss'
 
 export default function NoteList() {
@@ -15,6 +18,7 @@ export default function NoteList() {
   const [filteredNotes, setFilteredNotes] = useState<Note[]>(notes)
   const selectedCategory = useAppSelector(selectSelectedCategory)
   const { searchTerm } = useContext(SearchContext)
+  const { configs: { notesSortBy } } = useContext<ConfigContextState>(ConfigContext)
 
   const filterNotesBySearchTerm = (noteList: Note[]): Note[] => {
     if (searchTerm !== '') {
@@ -23,6 +27,38 @@ export default function NoteList() {
       return noteList
     }
   }
+
+  const sortNotes = (): void => {
+    let sortedNotes = [...filteredNotes]
+
+    switch (true) {
+      case notesSortBy === 'title':
+        sortedNotes = sortedNotes.sort((a, b) => a.text.localeCompare(b.text))
+
+        break
+
+      case notesSortBy === 'dateCreated':
+        sortedNotes = sortedNotes.sort((a, b) => moment(a.created).valueOf() - moment(b.created).valueOf())
+
+        break
+
+      case notesSortBy === 'lastUpdated':
+        sortedNotes = sortedNotes.sort((a, b) => moment(b.lastUpdated).valueOf() - moment(a.lastUpdated).valueOf())
+
+        break
+
+      default:
+        break
+    }
+
+    console.log(notesSortBy, sortedNotes);
+    setFilteredNotes(sortedNotes)
+  }
+
+  useEffect(() => {
+    sortNotes()
+  }, [notesSortBy])
+
 
   useEffect(() => {
     const { tab } = navigation
