@@ -37,6 +37,7 @@ const Editor = ({ noteId, text, scratchpad }: Props) => {
     <ReactCodeMirror
       value={text}
       height="calc(100vh - 2rem)"
+      style={{ direction: codeMirrorOptions.textDirection }}
       theme={codeMirrorTheme}
       basicSetup={basicSetupOptions}
       className={codeMirrorOptions.scrollPastEnd ? 'editor editor-extended' : 'editor'}
