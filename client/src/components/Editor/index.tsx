@@ -39,7 +39,7 @@ const Editor = ({ noteId, text, scratchpad }: Props) => {
       height="calc(100vh - 2rem)"
       theme={codeMirrorTheme}
       basicSetup={basicSetupOptions}
-      className='editor'
+      className={codeMirrorOptions.scrollPastEnd ? 'editor editor-extended' : 'editor'}
       extensions={[javascript({ jsx: true })]}
       onChange={handleChange}
     />
