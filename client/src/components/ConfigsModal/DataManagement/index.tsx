@@ -1,3 +1,8 @@
+import moment from 'moment';
+import JSZip from 'jszip';
+import { useAppSelector } from '../../../hooks/hooks'
+import { selectCategories } from '../../../store/categories/categorySlice'
+import { selectNotes } from '../../../store/notes/notesSlice'
 import DownloadIcon from '../../Icons/DownloadIcon'
 import ExportIcon from '../../Icons/ExportIcon'
 import ImportIcon from '../../Icons/ImportIcon'
@@ -6,6 +11,40 @@ import './style.scss'
 type Props = {}
 
 export default function DataManagement({ }: Props) {
+  const notes = useAppSelector(selectNotes)
+  const categories = useAppSelector(selectCategories)
+
+  const downloadAllNotes = () => {
+    const zip = new JSZip()
+
+    notes.forEach((note) => {
+      const { created, lastUpdated, text } = note
+
+      let category: string | undefined
+      category = categories.find((category) => category.id === note.category)?.name
+      if (category === undefined) category = ''
+
+      let title: string = note.text
+      title = title.split('\n')[0].split('#')[0].substring(0, 40)
+
+      const formattedNote = `---\ntitle: ${title}\ncreated: ${moment(created).format()}\nlastUpdated: ${moment(lastUpdated).format()}\ncategory: ${category}\n---\n\n${text}`
+
+      zip.file(`${title}.md`, formattedNote)
+    })
+
+    zip.generateAsync({ type: 'blob' })
+      .then((blob) => {
+        const zipFileName = 'notes.zip'
+        const a = document.createElement('a')
+
+        a.href = URL.createObjectURL(blob)
+        a.download = zipFileName
+        a.click()
+
+        URL.revokeObjectURL(a.href)
+      });
+  }
+
   return (
     <>
       <h3>Data management</h3>
@@ -16,6 +55,7 @@ export default function DataManagement({ }: Props) {
         aria-label='Download all notes'
         title='Download all notes'
         className='icon-button'
+        onClick={downloadAllNotes}
       >
         <DownloadIcon className='tabs-icon' width={18} height={18} />
 
