@@ -45,6 +45,23 @@ export default function DataManagement({ }: Props) {
       });
   }
 
+  const exportNotes = () => {
+    const exportData = {
+      notes,
+      categories
+    }
+
+    const blob = new Blob([JSON.stringify(exportData)], { type: 'json' })
+    const url = window.URL.createObjectURL(blob)
+    const a = document.createElement('a')
+
+    a.href = url
+    a.download = `takenote-backup-${moment().format('YYYY-MM-DD')}.json`
+    a.click()
+
+    window.URL.revokeObjectURL(url)
+  }
+
   return (
     <>
       <h3>Data management</h3>
@@ -68,6 +85,7 @@ export default function DataManagement({ }: Props) {
         aria-label='Export backup'
         title='Export backup'
         className='icon-button'
+        onClick={exportNotes}
       >
         <ExportIcon className='tabs-icon' width={18} height={18} />
 
