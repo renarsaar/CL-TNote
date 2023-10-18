@@ -51,7 +51,6 @@ export default function NoteList() {
         break
     }
 
-    console.log(notesSortBy, sortedNotes);
     setFilteredNotes(sortedNotes)
   }
 
