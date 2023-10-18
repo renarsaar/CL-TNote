@@ -59,9 +59,11 @@ export default function NavFunctions({ }: Props) {
     const blob = new Blob([note], { type: 'text/markdown' })
     const url = URL.createObjectURL(blob)
     const a = document.createElement('a')
+
     a.download = `${title}.md`
     a.href = url
     a.click()
+
     URL.revokeObjectURL(url)
   }
 
