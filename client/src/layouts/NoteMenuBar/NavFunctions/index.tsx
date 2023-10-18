@@ -1,8 +1,10 @@
+import moment from 'moment'
 import { useContext } from 'react'
 import { ConfigContext } from '../../../context'
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks'
-import { deleteNote, selectSelectedNote, setSelectedNote, toggleFavorite, toggleTrash } from '../../../store/notes/notesSlice'
+import { deleteNote, selectSelectedNote, toggleFavorite, toggleTrash } from '../../../store/notes/notesSlice'
 import { selectNavigation } from '../../../store/navigation/navigationSlice'
+import { selectCategories } from '../../../store/categories/categorySlice'
 import ScratchpadIcon from '../../../components/Icons/ScratchpadIcon'
 import PreviewerIcon from '../../../components/Icons/PreviewerIcon'
 import FavoritesIcon from '../../../components/Icons/FavoritesIcon'
@@ -15,6 +17,7 @@ type Props = {}
 export default function NavFunctions({ }: Props) {
   const dispatch = useAppDispatch()
   const selectedNote = useAppSelector(selectSelectedNote)
+  const categories = useAppSelector(selectCategories)
   const { tab } = useAppSelector(selectNavigation)
   const { configs, addConfig } = useContext(ConfigContext)
   const markdownPreview: boolean = configs.markdownPreview;
@@ -40,6 +43,28 @@ export default function NavFunctions({ }: Props) {
       : dispatch(toggleTrash({ noteId: selectedNote?.id, tab }))
   }
 
+  const downloadNote = () => {
+    if (selectedNote === null) return
+    const { text, created, lastUpdated } = selectedNote
+
+    let noteCategory: string | undefined
+    noteCategory = categories.find((category) => category.id === selectedNote.category)?.name
+    if (noteCategory === undefined) noteCategory = ''
+
+    let title: string = selectedNote.text
+    title = title.split('\n')[0].split('#')[0].substring(0, 40)
+
+    const note = `---\ntitle: ${title}\ncreated: ${moment(created).format()}\nlastUpdated: ${moment(lastUpdated).format()}\ncategory: ${noteCategory}\n---\n\n${text}`
+
+    const blob = new Blob([note], { type: 'text/markdown' })
+    const url = URL.createObjectURL(blob)
+    const a = document.createElement('a')
+    a.download = `${title}.md`
+    a.href = url
+    a.click()
+    URL.revokeObjectURL(url)
+  }
+
   return (
     <nav>
       <button className='note-menu-bar-button' onClick={toggleMarkdownPreview}>
@@ -61,7 +86,7 @@ export default function NavFunctions({ }: Props) {
         <TrashIcon className='note-menu-bar-icon trash' width={18} height={18} />
       </button>
 
-      <button className='note-menu-bar-button'>
+      <button className='note-menu-bar-button' onClick={downloadNote}>
         <DownloadNoteIcon className='note-menu-bar-icon' width={18} height={18} />
       </button>
 
