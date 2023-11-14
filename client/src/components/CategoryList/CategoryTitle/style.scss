@@ -1,0 +1,52 @@
+@use '../../../assets/variables' as v;
+
+.category-title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1rem;
+  padding: 0.5rem 0 0.5rem 1rem;
+
+  .collapse-btn {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    color: v.$app-sidebar-categories-collapse-button-color;
+    background: 0 0;
+    font-size: .8rem;
+    line-height: 1;
+    margin: 0;
+    padding: 0;
+    border: none;
+
+    .title {
+      color: v.$app-sidebar-categories-header-color;
+      text-transform: uppercase;
+      font-size: .8rem;
+      letter-spacing: .5px;
+      margin: 0;
+    }
+
+    &:hover .app-sidebar-icon {
+      stroke: v.$app-sidebar-categories-collapse-button-hover-icon-stroke-color;
+    }
+  }
+
+  .add-category-btn {
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: 0 0;
+    color: v.$app-sidebar-add-category-button-color;
+    font-size: .8rem;
+    line-height: 1;
+    margin: 0;
+    padding: 0.5rem 1rem;
+    border: none;
+
+    &:hover .app-sidebar-icon {
+      stroke: v.$app-sidebar-add-category-button-hover-icon-stroke-color;
+    }
+  }
+}

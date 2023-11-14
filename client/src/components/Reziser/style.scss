@@ -1,16 +1,30 @@
+@use '../../assets/variables' as v;
+
 .resizer {
-  cursor: col-resize;
-  width: 8px;
-  margin: 0 -4px;
-  border-left: 5px solid rgba(255, 255, 255, 0);
-  border-right: 5px solid rgba(255, 255, 255, 0);
-  background: #000;
-  opacity: .2;
+  background: v.$resizer-background-color;
+  opacity: v.$resizer-light-mode-opacity;
+  z-index: 1;
+  box-sizing: border-box;
   background-clip: padding-box;
 
+  &.vertical {
+    width: 11px;
+    margin: 0 -5px;
+    border-left: 5px solid v.$resizer-border-color;
+    border-right: 5px solid v.$resizer-border-color;
+    cursor: col-resize;
+
+    &:hover {
+      border-left: 5px solid v.$resizer-hover-border-color;
+      border-right: 5px solid v.$resizer-hover-border-color;
+    }
+  }
+
+  &.dark-mode {
+    opacity: v.$resizer-dark-mode-opacity;
+  }
+
   &:hover {
-    border-left: 5px solid rgba(0, 0, 0, .5);
-    border-right: 5px solid rgba(0, 0, 0, .5);
     transition: all 2s ease;
   }
 }

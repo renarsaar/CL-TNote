@@ -1,22 +1,24 @@
 import { useContext } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks'
-import { ActiveNoteTooltipContext } from '../../../context/ActiveNoteTooltipContext'
+import { NoteTooltipContext } from '../../../context/NoteTooltipContext'
 import { SearchContext } from '../../../context/SearchContext'
 import { selectNavigation } from '../../../store/navigation/navigationSlice'
 import { clearTrashNotes, selectNotes } from '../../../store/notes/notesSlice'
 import './style.scss'
+import { ConfigContext } from '../../../context'
 
 const NoteSidebarHeader = () => {
   const dispatch = useAppDispatch()
-  const { tab } = useAppSelector(selectNavigation)
-  const { clearActiveNoteId } = useContext(ActiveNoteTooltipContext)
-  const { setSearchTerm } = useContext(SearchContext)
   const notes = useAppSelector(selectNotes)
+  const { tab } = useAppSelector(selectNavigation)
+  const noteTooltipContext = useContext(NoteTooltipContext)
+  const { setSearchTerm } = useContext(SearchContext)
+  const { configs: { theme } } = useContext(ConfigContext)
   const trashNotes = notes.filter((note) => note.trash === true)
 
   const onClick = () => {
     dispatch(clearTrashNotes())
-    clearActiveNoteId()
+    noteTooltipContext.clearNoteId()
   }
 
   const onChange = (event: React.FormEvent<HTMLInputElement>) => {
@@ -24,14 +26,8 @@ const NoteSidebarHeader = () => {
     setSearchTerm(value)
   }
 
-  /**
-    Todo
-      check codemirror docs to see options about highlighting
-      + handleTitle needs some styling
-   */
-
   return (
-    <div className='note-sidebar-header'>
+    <div className={theme === 'light' ? 'note-sidebar-header' : 'note-sidebar-header dark-mode'}>
       <input
         data-testid='note-search'
         type='search'
@@ -40,15 +36,13 @@ const NoteSidebarHeader = () => {
       />
 
       {(tab === 'trash' && trashNotes.length !== 0) &&
-        <>
-          <button
-            className='empty-trash-button'
-            title='Empty'
-            onClick={onClick}
-          >
-            Empty
-          </button>
-        </>
+        <button
+          className='empty-trash-btn'
+          title='Empty'
+          onClick={onClick}
+        >
+          Empty
+        </button>
       }
     </div>
   )

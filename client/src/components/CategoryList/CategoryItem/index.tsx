@@ -1,5 +1,5 @@
 import { useContext, useState } from 'react'
-import { ActiveCategoryTooltipContext } from '../../../context/ActiveCategoryTooltipContext'
+import { CategoryTooltipContext } from '../../../context/CategoryTooltipContext'
 import { Category } from '../../../interfaces/Category'
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks'
 import { setNavigation } from '../../../store/navigation/navigationSlice'
@@ -17,7 +17,7 @@ type Props = {
 const CategoryItem = ({ category }: Props) => {
   const dispatch = useAppDispatch()
   const { id, name } = category
-  const { setActiveCategoryId } = useContext(ActiveCategoryTooltipContext)
+  const categoryTooltipContext = useContext(CategoryTooltipContext)
   const selectedCategory = useAppSelector(selectSelectedCategory)
   const notes = useAppSelector(selectNotes)
   const isCategorySelected: boolean = id === selectedCategory?.id
@@ -35,7 +35,7 @@ const CategoryItem = ({ category }: Props) => {
   const handleOnOptionsClick = (event: React.MouseEvent<SVGElement>) => {
     event.stopPropagation()
 
-    setActiveCategoryId(category.id)
+    categoryTooltipContext.setCategoryId(category.id)
 
     setTooltipX(() => event.clientX)
     setTooltipY(() => event.clientY)
@@ -51,20 +51,18 @@ const CategoryItem = ({ category }: Props) => {
         className={isCategorySelected ? 'category-list-item-active' : 'category-list-item'}
         onClick={handleOnCategoryClick}
       >
-        <div className='category-list-item-name'>
+        <div className='category-name'>
           <CategoryIcon className='app-sidebar-icon' width={15} height={15} />
 
           {name}
         </div>
 
-        <div className='category-options-container'>
-          <NoteOptionsIcon
-            className='app-sidebar-context-icon'
-            width={15}
-            height={15}
-            onClick={handleOnOptionsClick}
-          />
-        </div>
+        <NoteOptionsIcon
+          className='app-sidebar-context-icon'
+          width={15}
+          height={15}
+          onClick={handleOnOptionsClick}
+        />
       </div>
 
       <CategoryTooltip categoryId={id} tooltipX={tooltipX} tooltipY={tooltipY} />

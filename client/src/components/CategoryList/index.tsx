@@ -1,7 +1,6 @@
-import React from 'react'
 import { useContext, useEffect, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../hooks/hooks'
-import { ActiveCategoryRenameFormContext } from '../../context/ActiveCategoryRenameFormContext'
+import { RenameCategoryContext } from '../../context/RenameCategoryContext'
 import { getCategories, selectCategories, selectSelectedCategory } from '../../store/categories/categorySlice'
 import { selectNotes, setSelectedNote } from '../../store/notes/notesSlice'
 import { setNavigation } from '../../store/navigation/navigationSlice'
@@ -18,12 +17,12 @@ const CategoryList = () => {
   const notes = useAppSelector(selectNotes)
   const categories: Category[] = useAppSelector(selectCategories)
   const selectedCategory = useAppSelector(selectSelectedCategory)
-  const { activeCategoryFormId } = useContext(ActiveCategoryRenameFormContext)
+  const renameCategoryContext = useContext(RenameCategoryContext)
   const [isCollapsed, setIsCollapsed] = useState<boolean>(false)
-  const handleIsCollapsed = () => setIsCollapsed((isCollapsed) => !isCollapsed)
-  const [openNewCategoryForm, setOpenNewCategoryForm] = useState<boolean>(false)
-  const openCategoryForm = () => setOpenNewCategoryForm(() => true)
-  const closeCategoryForm = () => setOpenNewCategoryForm(() => false)
+  const toggleCollapse = () => setIsCollapsed((isCollapsed) => !isCollapsed)
+
+  const [isNewCategoryFormOpen, setIsNewCategoryFormOpen] = useState<boolean>(false)
+  const toggleNewCategoryForm = (isOpen: boolean) => setIsNewCategoryFormOpen(isOpen)
 
   useEffect(() => {
     dispatch(getCategories())
@@ -37,40 +36,53 @@ const CategoryList = () => {
       dispatch(setSelectedNote({ note: categorizedNotes[0] }))
       dispatch(setNavigation(name))
     }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCategory])
 
   return ((categories.length !== 0) && (isCollapsed !== true)) ? (
     <>
-      <CategoryTitle isCollapsed={isCollapsed} handleIsCollapsed={handleIsCollapsed} openCategoryForm={openCategoryForm} />
+      <CategoryTitle
+        isCollapsed={isCollapsed}
+        toggleCollapse={toggleCollapse}
+        toggleNewCategoryForm={toggleNewCategoryForm}
+      />
 
       <div className='category-list'>
-        {categories.map((category) => {
-          return activeCategoryFormId === category?.id
+        {categories.map((category) =>
+          renameCategoryContext.formId === category?.id
             ? (
-              <React.Fragment key={category.id}>
-                <div className='category-list-form-name'>
-                  <CategoryIcon className='app-sidebar-icon' width={15} height={15} />
+              <div key={category.id} className='category-rename-container'>
+                <CategoryIcon
+                  className='app-sidebar-icon'
+                  width={15}
+                  height={15}
+                />
 
-                  <RenameCategoryForm
-                    id={category.id}
-                    value={category.name}
-                    className={'category-form-rename'}
-                  />
-                </div>
-              </React.Fragment>
+                <RenameCategoryForm
+                  id={category.id}
+                  value={category.name}
+                />
+              </div>
             )
             : (
-              <CategoryItem
-                key={category.id}
-                category={category}
-              />
+              <CategoryItem key={category.id} category={category} />
             )
-        })}
 
-        {openNewCategoryForm === true && <NewCategoryForm className={'category-form'} closeCategoryForm={closeCategoryForm} />}
+        )}
+
+        {isNewCategoryFormOpen === true && (
+          <NewCategoryForm toggleNewCategoryForm={toggleNewCategoryForm} />
+        )}
       </div>
     </>
-  ) : <CategoryTitle isCollapsed={isCollapsed} handleIsCollapsed={handleIsCollapsed} openCategoryForm={openCategoryForm} />
+  ) : (
+    <CategoryTitle
+      isCollapsed={isCollapsed}
+      toggleCollapse={toggleCollapse}
+      toggleNewCategoryForm={toggleNewCategoryForm}
+    />
+  )
 }
 
 export default CategoryList

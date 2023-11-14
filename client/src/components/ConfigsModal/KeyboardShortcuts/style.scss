@@ -1,25 +1,39 @@
-  .settings-shortcut {
+@use '../../../assets/variables' as v;
+
+.settings-shortcut {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: .3rem 0;
+
+  .keys {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: .3rem 0;
 
-    .keys {
-      display: flex;
-
-      kbd {
-        background-color: #F7F7F7;
-        border: 1px solid #CCC;
-        border-radius: 3px;
-        box-shadow: 0 1px 0 rgba(0, 0, 0, .2), 0 0 0 2px #FFF inset;
-        color: #333;
-        display: inline-block;
-        font-family: Helvetica, Arial, sans-serif;
-        font-size: 12px;
-        line-height: 1.4;
-        margin: 0 .3rem;
-        padding: 0.1rem .6rem;
-        text-shadow: 0 1px 0 #FFF;
-      }
+    kbd {
+      display: inline-block;
+      background-color: v.$configs-modal-keyboard-shortcuts-kbd-light-background-color;
+      color: v.$configs-modal-keyboard-shortcuts-kbd-light-text-color;
+      font-family: Helvetica, Arial, sans-serif;
+      font-size: 12px;
+      text-shadow: 0 1px 0 v.$configs-modal-keyboard-shortcuts-kbd-light-text-shadow-color;
+      line-height: 1.4;
+      border: 1px solid v.$configs-modal-keyboard-shortcuts-kbd-light-border-color;
+      border-radius: 3px;
+      box-shadow: v.$configs-modal-keyboard-shortcuts-kbd-light-box-shadow;
+      margin: 0 .3rem;
+      padding: 0.1rem .6rem;
     }
   }
+
+  &.dark-mode {
+    color: v.$configs-modal-keyboard-shortcuts-dark-text-color;
+
+    .keys kbd {
+      background-color: v.$configs-modal-keyboard-shortcuts-kbd-dark-background-color;
+      color: v.$configs-modal-keyboard-shortcuts-kbd-dark-text-color;
+      text-shadow: 0 1px 0 v.$configs-modal-keyboard-shortcuts-kbd-dark-text-shadow-color;
+      border: 1px solid v.$configs-modal-keyboard-shortcuts-kbd-dark-border-color;
+      box-shadow: v.$configs-modal-keyboard-shortcuts-kbd-dark-box-shadow;
+    }
+  }
+}

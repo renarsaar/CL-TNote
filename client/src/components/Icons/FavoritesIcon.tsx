@@ -1,5 +1,3 @@
-import './style.scss';
-
 type Props = {
   className: 'app-sidebar-icon' | 'note-sidebar-favorites-icon' | 'note-menu-bar-icon' | 'note-menu-bar-icon-favorited' | 'options-context-icon';
   width: number;

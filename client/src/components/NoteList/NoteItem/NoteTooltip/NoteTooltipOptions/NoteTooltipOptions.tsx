@@ -1,16 +1,18 @@
 import { useContext } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../../../hooks/hooks'
+import { NoteTooltipContext } from '../../../../../context/NoteTooltipContext'
 import { deleteNote, setNoteCategory, toggleFavorite, toggleTrash } from '../../../../../store/notes/notesSlice'
+import { selectNavigation } from '../../../../../store/navigation/navigationSlice'
+import { ConfigContext } from '../../../../../context'
+import { ConfigContextState } from '../../../../../context/types'
 import FavoritesIcon from '../../../../Icons/FavoritesIcon'
 import TrashIcon from '../../../../Icons/TrashIcon'
 import DownloadIcon from '../../../../Icons/DownloadIcon'
 import ClipboardIcon from '../../../../Icons/ClipboardIcon'
 import RestoreFromTrashIcon from '../../../../Icons/RestoreFromTrashIcon'
 import DeleteIcon from '../../../../Icons/DeleteIcon'
-import { selectNavigation } from '../../../../../store/navigation/navigationSlice'
-import { ActiveNoteTooltipContext } from '../../../../../context/ActiveNoteTooltipContext'
-import './style.scss'
 import CloseIcon from '../../../../Icons/CloseIcon'
+import './style.scss'
 
 type Props = {
   noteId: string
@@ -22,38 +24,39 @@ type Props = {
 export const NoteTooltipOptions = ({ noteId, noteCategory, isTrash, isFavorite }: Props) => {
   const dispatch = useAppDispatch()
   const { tab } = useAppSelector(selectNavigation)
-  const { clearActiveNoteId } = useContext(ActiveNoteTooltipContext)
+  const noteTooltipContext = useContext(NoteTooltipContext)
+  const { configs: { theme } } = useContext<ConfigContextState>(ConfigContext)
 
   const markAsFavorite = () => {
     dispatch(toggleFavorite({ noteId, tab }))
-    clearActiveNoteId()
+    noteTooltipContext.clearNoteId()
   }
 
   const moveToTrash = () => {
     dispatch(toggleTrash({ noteId, tab }));
-    clearActiveNoteId()
-  };
+    noteTooltipContext.clearNoteId()
+  }
 
   const removePermanently = () => {
     dispatch(deleteNote({ noteId, tab }))
-    clearActiveNoteId()
+    noteTooltipContext.clearNoteId()
   }
 
   const removeCategory = () => {
     dispatch(setNoteCategory({ categoryId: null, noteId }))
-    clearActiveNoteId()
+    noteTooltipContext.clearNoteId()
   }
 
   const downloadNote = () => {
     // Todo
-  };
+  }
 
   const copyReferenceNote = () => {
     // Todo
-  };
+  }
 
   return (
-    <nav className='options-nav'>
+    <nav className={theme === 'light' ? 'options-nav' : 'options-nav dark-mode'}>
       <div
         role='button'
         className={isTrash === true ? 'options-nav-item trash' : 'options-nav-item'}
@@ -124,5 +127,5 @@ export const NoteTooltipOptions = ({ noteId, noteCategory, isTrash, isFavorite }
         Copy reference to note
       </div>
     </nav>
-  );
-};
+  )
+}

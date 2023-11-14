@@ -1,8 +1,13 @@
+import { useContext } from 'react'
+import { ConfigContext } from '../../context'
+import { ConfigContextState } from '../../context/types'
 import './style.scss'
 
 const EmptyNote = () => {
+  const { configs: { theme } } = useContext<ConfigContextState>(ConfigContext)
+
   return (
-    <div className='empty-note'>
+    <div className={theme === 'light' ? 'empty-note' : 'empty-note dark-mode'}>
       <div className='settings-shortcut'>
         <h1>Create a note</h1>
 

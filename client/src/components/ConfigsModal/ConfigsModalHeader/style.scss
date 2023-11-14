@@ -1,11 +1,13 @@
+@use '../../../assets/variables' as v;
+
 .configs-modal-header {
   position: sticky;
   top: 0;
-  background-color: #FFF;
   display: flex;
   justify-content: space-between;
-  border-bottom: 1px solid #E5E5E5;
   padding: 1rem 2rem;
+  background-color: v.$configs-modal-header-light-background-color;
+  border-bottom: 1px solid v.$configs-modal-header-light-border-color;
 
   .profile-details {
     display: flex;
@@ -37,20 +39,40 @@
   }
 
   .modal-close-btn {
+    cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
     font-weight: 700;
     line-height: 1;
-    color: #000;
-    background-color: #FFF;
+    background-color: v.$configs-modal-header-close-btn-light-background-color;
+    color: v.$configs-modal-header-close-btn-light-text-color;
     padding: .6rem;
-    cursor: pointer;
     border: none;
     border-radius: 6px;
 
     &:hover {
-      background-color: #EDEDED;
+      background-color: v.$configs-modal-header-hover-close-btn-light-background-color;
+    }
+  }
+
+  &.dark-mode {
+    background-color: v.$configs-modal-header-dark-background-color;
+    border-bottom: 1px solid v.$configs-modal-header-dark-border-color;
+
+    .profile-details {
+      h1 {
+        color: v.$configs-modal-header-dark-heading-color;
+      }
+    }
+
+    .modal-close-btn {
+      background-color: v.$configs-modal-header-close-btn-dark-background-color;
+      color: v.$configs-modal-header-close-btn-dark-text-color;
+
+      &:hover {
+        background-color: v.$configs-modal-header-hover-close-btn-dark-background-color;
+      }
     }
   }
 }

@@ -1,4 +1,7 @@
+import { useContext } from 'react'
+import { ConfigContext } from '../../../../context'
 import { SettingsInfo } from '..'
+import { ConfigContextState } from '../../../../context/types'
 import './style.scss'
 
 const SettingsOption = ({
@@ -11,6 +14,8 @@ const SettingsOption = ({
   onClick,
   onChange
 }: SettingsInfo) => {
+  const { configs: { theme } } = useContext<ConfigContextState>(ConfigContext)
+
   const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     if (!onChange) return
 
@@ -19,7 +24,7 @@ const SettingsOption = ({
   }
 
   return (
-    <div className='settings-option'>
+    <div className={theme === 'light' ? 'settings-option' : 'settings-option dark-mode'}>
       <div>
         <h4>{heading}</h4>
         <p className='description'>{description}</p>

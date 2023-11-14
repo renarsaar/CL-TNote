@@ -9,7 +9,6 @@ import ScratchpadIcon from '../../components/Icons/ScratchpadIcon'
 import NoteIcon from '../../components/Icons/NoteIcon'
 import FavoritesIcon from '../../components/Icons/FavoritesIcon'
 import TrashIcon from '../../components/Icons/TrashIcon'
-import AppSidebarButton from '../../components/Buttons/AppSidebarButton'
 import NewNoteButton from '../../components/Buttons/NewNoteButton'
 import CategoryList from '../../components/CategoryList'
 import Resizer from '../../components/Reziser'
@@ -63,10 +62,9 @@ const AppSideBar = () => {
       <aside className='app-sidebar' style={{ width: appSideBarWidth }}>
         <NewNoteButton />
 
-        <section>
-          <AppSidebarButton
-            heading='Scratchpad'
-            selected={tab === 'scratchpad'}
+        <section className='app-sidebar-btn-container'>
+          <button
+            className={tab === 'scratchpad' ? 'app-sidebar-btn selected' : 'app-sidebar-btn'}
             onClick={toggleScratchpad}
           >
             <ScratchpadIcon
@@ -74,11 +72,12 @@ const AppSideBar = () => {
               width={15}
               height={15}
             />
-          </AppSidebarButton>
 
-          <AppSidebarButton
-            heading='Notes'
-            selected={tab === 'notes'}
+            Scratchpad
+          </button>
+
+          <button
+            className={tab === 'notes' ? 'app-sidebar-btn selected' : 'app-sidebar-btn'}
             onClick={toggleNotes}
           >
             <NoteIcon
@@ -86,11 +85,12 @@ const AppSideBar = () => {
               width={15}
               height={15}
             />
-          </AppSidebarButton>
 
-          <AppSidebarButton
-            heading='Favorites'
-            selected={tab === 'favorites'}
+            Notes
+          </button>
+
+          <button
+            className={tab === 'favorites' ? 'app-sidebar-btn selected' : 'app-sidebar-btn'}
             onClick={toggleFavorites}
           >
             <FavoritesIcon
@@ -98,11 +98,12 @@ const AppSideBar = () => {
               width={15}
               height={15}
             />
-          </AppSidebarButton>
 
-          <AppSidebarButton
-            heading='Trash'
-            selected={tab === 'trash'}
+            Favorites
+          </button>
+
+          <button
+            className={tab === 'trash' ? 'app-sidebar-btn selected' : 'app-sidebar-btn'}
             onClick={toggleTrash}
           >
             <TrashIcon
@@ -110,7 +111,9 @@ const AppSideBar = () => {
               width={15}
               height={15}
             />
-          </AppSidebarButton>
+
+            Trash
+          </button>
 
           <CategoryList />
         </section>

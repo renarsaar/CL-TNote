@@ -1,13 +1,18 @@
+@use '../../assets/variables' as v;
+
 .note-sidebar-container {
   flex: 0 0 auto;
   box-sizing: border-box;
+  background: v.$note-sidebar-light-background-color;
+  border-right: 1px solid v.$note-sidebar-light-border-right-color;
 
-  border-right: 2px solid #ccc;
+  &.dark-mode {
+    background: v.$note-sidebar-dark-background-color;
+    border-right: 1px solid v.$note-sidebar-dark-border-right-color;
+  }
 }
 
 .note-sidebar {
-  background: #E5E5E5;
-  border-right: 1px solid #E5E5E5;
   height: 100%;
   overflow-y: hidden;
   overflow-x: hidden;

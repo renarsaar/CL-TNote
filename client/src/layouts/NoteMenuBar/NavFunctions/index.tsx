@@ -11,16 +11,15 @@ import FavoritesIcon from '../../../components/Icons/FavoritesIcon'
 import TrashIcon from '../../../components/Icons/TrashIcon'
 import DownloadNoteIcon from '../../../components/Icons/DownloadNoteIcon'
 import ClipboardIcon from '../../../components/Icons/ClipboardIcon'
+import { ConfigContextState } from '../../../context/types'
 
-type Props = {}
-
-export default function NavFunctions({ }: Props) {
+const NavFunctions = () => {
   const dispatch = useAppDispatch()
   const selectedNote = useAppSelector(selectSelectedNote)
   const categories = useAppSelector(selectCategories)
   const { tab } = useAppSelector(selectNavigation)
-  const { configs, addConfig } = useContext(ConfigContext)
-  const markdownPreview: boolean = configs.markdownPreview;
+  const { configs, addConfig } = useContext<ConfigContextState>(ConfigContext)
+  const markdownPreview: boolean = configs.markdownPreview
 
   const toggleMarkdownPreview = () => {
     addConfig(configs, {
@@ -54,11 +53,11 @@ export default function NavFunctions({ }: Props) {
     let title: string = selectedNote.text
     title = title.split('\n')[0].split('#')[0].substring(0, 40)
 
-    const note = `---\ntitle: ${title}\ncreated: ${moment(created).format()}\nlastUpdated: ${moment(lastUpdated).format()}\ncategory: ${noteCategory}\n---\n\n${text}`
+    const note: string = `---\ntitle: ${title}\ncreated: ${moment(created).format()}\nlastUpdated: ${moment(lastUpdated).format()}\ncategory: ${noteCategory}\n---\n\n${text}`
 
-    const blob = new Blob([note], { type: 'text/markdown' })
-    const url = URL.createObjectURL(blob)
-    const a = document.createElement('a')
+    const blob: Blob = new Blob([note], { type: 'text/markdown' })
+    const url: string = URL.createObjectURL(blob)
+    const a: HTMLAnchorElement = document.createElement('a')
 
     a.download = `${title}.md`
     a.href = url
@@ -71,8 +70,16 @@ export default function NavFunctions({ }: Props) {
     <nav>
       <button className='note-menu-bar-button' onClick={toggleMarkdownPreview}>
         {markdownPreview === true
-          ? <ScratchpadIcon className='note-menu-bar-icon' width={18} height={18} />
-          : <PreviewerIcon className='note-menu-bar-icon' width={18} height={18} />
+          ? <ScratchpadIcon
+            className='note-menu-bar-icon'
+            width={18}
+            height={18}
+          />
+          : <PreviewerIcon
+            className='note-menu-bar-icon'
+            width={18}
+            height={18}
+          />
         }
       </button>
 
@@ -85,16 +92,30 @@ export default function NavFunctions({ }: Props) {
       </button>
 
       <button className='note-menu-bar-button' onClick={moveToTrash}>
-        <TrashIcon className='note-menu-bar-icon trash' width={18} height={18} />
+        <TrashIcon
+          className='note-menu-bar-icon trash'
+          width={18}
+          height={18}
+        />
       </button>
 
       <button className='note-menu-bar-button' onClick={downloadNote}>
-        <DownloadNoteIcon className='note-menu-bar-icon' width={18} height={18} />
+        <DownloadNoteIcon
+          className='note-menu-bar-icon'
+          width={18}
+          height={18}
+        />
       </button>
 
       <button className='note-menu-bar-button'>
-        <ClipboardIcon className='note-menu-bar-icon' width={18} height={18} />
+        <ClipboardIcon
+          className='note-menu-bar-icon'
+          width={18}
+          height={18}
+        />
       </button>
     </nav>
   )
 }
+
+export default NavFunctions

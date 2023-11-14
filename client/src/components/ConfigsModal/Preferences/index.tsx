@@ -1,24 +1,23 @@
-import { useContext } from 'react';
+import { useContext } from 'react'
 import SettingsOption from './SettingsOption'
 import './style.scss'
-import { ConfigContext } from '../../../context';
-import { ConfigContextState, ConfigObject } from '../../../context/types';
-
+import { ConfigContext } from '../../../context'
+import { ConfigContextState, ConfigObject } from '../../../context/types'
 
 export type SettingsInfo = {
-  type: 'Checkbox' | 'Options';
-  heading: string;
-  description: string;
-  checked?: boolean;
-  options?: { description: string, value: string }[];
-  selectedOption?: string;
-  onClick?: () => void;
-  onChange?: (value: string) => void;
+  type: 'Checkbox' | 'Options'
+  heading: string
+  description: string
+  checked?: boolean
+  options?: { description: string, value: string }[]
+  selectedOption?: string
+  onClick?: () => void
+  onChange?: (value: string) => void
 }
 
 const Preferences = () => {
-  const { configs, addConfig } = useContext(ConfigContext) as ConfigContextState;
-  const { codeMirrorOptions, notesSortBy, markdownPreview, theme, }: ConfigObject = configs;
+  const { configs, addConfig } = useContext(ConfigContext) as ConfigContextState
+  const { codeMirrorOptions, notesSortBy, markdownPreview, theme }: ConfigObject = configs
 
   const settingsInfo: SettingsInfo[] = [
     {
@@ -75,10 +74,17 @@ const Preferences = () => {
       heading: 'Dark mode',
       description: 'Controls the theme of the application and editor',
       checked: theme === 'light' ? false : true,
-      onClick: () => addConfig(configs, {
-        'key': 'theme',
-        'value': theme === 'light' ? 'dark' : 'light',
-      })
+      onClick: () => {
+        addConfig(configs, {
+          'key': 'theme',
+          'value': theme === 'light' ? 'dark' : 'light',
+        })
+
+        theme === 'light'
+          ? document.documentElement.setAttribute('data-color-mode', 'dark')
+          :
+          document.documentElement.setAttribute('data-color-mode', 'light')
+      }
     },
     {
       type: 'Options',

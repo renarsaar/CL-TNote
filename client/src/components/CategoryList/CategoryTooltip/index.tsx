@@ -2,8 +2,8 @@ import { useContext, useEffect, useRef } from 'react'
 import { useAppDispatch } from '../../../hooks/hooks'
 import { removeNotesCategory } from '../../../store/notes/notesSlice'
 import { deleteCategory } from '../../../store/categories/categorySlice'
-import { ActiveCategoryTooltipContext } from '../../../context/ActiveCategoryTooltipContext'
-import { ActiveCategoryRenameFormContext } from '../../../context/ActiveCategoryRenameFormContext'
+import { CategoryTooltipContext } from '../../../context/CategoryTooltipContext'
+import { RenameCategoryContext } from '../../../context/RenameCategoryContext'
 import DeleteIcon from '../../Icons/DeleteIcon'
 import PencilIcon from '../../Icons/PencilIcon'
 import './style.scss'
@@ -17,12 +17,12 @@ type Props = {
 const CategoryTooltip = ({ categoryId, tooltipX, tooltipY }: Props) => {
   const dispatch = useAppDispatch()
   const ref = useRef<HTMLDivElement>(null)
-  const { activeCategoryId, clearActiveCategoryId } = useContext(ActiveCategoryTooltipContext)
-  const { setActiveCategoryFormId } = useContext(ActiveCategoryRenameFormContext)
-  const isVisible: boolean = categoryId === activeCategoryId
+  const categoryTooltipContext = useContext(CategoryTooltipContext)
+  const renameCategoryContext = useContext(RenameCategoryContext)
+  const isVisible: boolean = categoryId === categoryTooltipContext.categoryId
 
   useEffect(() => {
-    document.addEventListener('click', handleClickOutside, true);
+    document.addEventListener('click', handleClickOutside, true)
     return () => document.removeEventListener('click', handleClickOutside, true)
   }, [isVisible])
 
@@ -33,7 +33,7 @@ const CategoryTooltip = ({ categoryId, tooltipX, tooltipY }: Props) => {
       (event.target as Element).id === 'app-sidebar-context-icon'
     ) return
 
-    if (ref.current && !ref.current.contains(event.target)) clearActiveCategoryId()
+    if (ref.current && !ref.current.contains(event.target)) categoryTooltipContext.clearCategoryId()
   }
 
   const onClick = (event: React.MouseEvent<HTMLDivElement>) => {
@@ -43,14 +43,14 @@ const CategoryTooltip = ({ categoryId, tooltipX, tooltipY }: Props) => {
   const renameCategory = (event: React.MouseEvent<HTMLDivElement>) => {
     event.stopPropagation()
 
-    setActiveCategoryFormId(categoryId)
-    clearActiveCategoryId()
+    renameCategoryContext.setFormId(categoryId)
+    categoryTooltipContext.clearCategoryId()
   }
 
   const deletePermanently = () => {
     dispatch(deleteCategory({ id: categoryId }))
     dispatch(removeNotesCategory({ categoryId }))
-    clearActiveCategoryId()
+    categoryTooltipContext.clearCategoryId()
   }
 
   return (
@@ -60,27 +60,25 @@ const CategoryTooltip = ({ categoryId, tooltipX, tooltipY }: Props) => {
       onClick={onClick}
       ref={ref}
     >
-      <nav className='category-tooltip-nav'>
-        <div
-          role='button'
-          className='category-tooltip-nav-button'
-          onClick={renameCategory}
-        >
-          <PencilIcon className='options-context-icon' width={18} height={18} />
+      <div
+        role='button'
+        className='category-tooltip-btn'
+        onClick={renameCategory}
+      >
+        <PencilIcon className='options-context-icon' width={18} height={18} />
 
-          Rename category
-        </div>
+        Rename category
+      </div>
 
-        <div
-          role='button'
-          className='category-tooltip-nav-button trash'
-          onClick={deletePermanently}
-        >
-          <DeleteIcon className='options-context-icon' width={18} height={18} />
+      <div
+        role='button'
+        className='category-tooltip-btn trash'
+        onClick={deletePermanently}
+      >
+        <DeleteIcon className='options-context-icon' width={18} height={18} />
 
-          Delete permanently
-        </div>
-      </nav>
+        Delete permanently
+      </div>
     </div>
   )
 }

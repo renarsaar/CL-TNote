@@ -1,11 +1,13 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import ReactDOM from 'react-dom'
+import { ConfigContext } from '../../context'
 import ConfigsModalHeader from './ConfigsModalHeader'
 import TabList from './TabList'
 import Preferences from './Preferences'
 import KeyboardShortcuts from './KeyboardShortcuts'
 import DataManagement from './DataManagement'
 import About from './About'
+import { ConfigContextState } from '../../context/types'
 import './style.scss'
 
 type Props = {
@@ -16,12 +18,13 @@ type Props = {
 export type ActiveTab = 'Preferences' | 'Shortcuts' | 'Data' | 'About'
 
 const ConfigsModal = ({ isShowing, hide }: Props) => {
-  const [activeTab, setActiveTab] = useState<ActiveTab>('Preferences');
+  const { configs: { theme } } = useContext<ConfigContextState>(ConfigContext)
+  const [activeTab, setActiveTab] = useState<ActiveTab>('Preferences')
 
   const switchTab = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const { name }: any = e.currentTarget;
+    const { name }: any = e.currentTarget
 
-    setActiveTab(name);
+    setActiveTab(name)
   }
 
   const onModalClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -34,7 +37,7 @@ const ConfigsModal = ({ isShowing, hide }: Props) => {
         <>
           <div className='modal-overlay' />
           <div
-            className='modal-wrapper'
+            className={theme === 'light' ? 'modal-wrapper' : 'modal-wrapper dark-mode'}
             aria-modal
             aria-hidden
             tabIndex={-1}
@@ -61,4 +64,4 @@ const ConfigsModal = ({ isShowing, hide }: Props) => {
   )
 }
 
-export default ConfigsModal;
+export default ConfigsModal

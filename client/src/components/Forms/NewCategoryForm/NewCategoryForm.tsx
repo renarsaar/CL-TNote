@@ -1,17 +1,16 @@
 import { useContext } from 'react'
 import { createCategory } from '../../../store/categories/categorySlice'
 import { useAppDispatch } from '../../../hooks/hooks'
-import { ActiveCategoryRenameFormContext } from '../../../context/ActiveCategoryRenameFormContext'
+import { RenameCategoryContext } from '../../../context/RenameCategoryContext'
 import '../style.scss'
 
 type Props = {
-  className: 'category-form',
-  closeCategoryForm: () => void
+  toggleNewCategoryForm: (isOpen: boolean) => void
 }
 
-const NewCategoryForm = ({ className, closeCategoryForm }: Props) => {
+const NewCategoryForm = ({ toggleNewCategoryForm }: Props) => {
   const dispatch = useAppDispatch()
-  const { clearActiveCategoryFormId } = useContext(ActiveCategoryRenameFormContext)
+  const renameCategoryContext = useContext(RenameCategoryContext)
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -22,18 +21,18 @@ const NewCategoryForm = ({ className, closeCategoryForm }: Props) => {
 
     dispatch(createCategory({ value }))
 
-    clearActiveCategoryFormId()
-    closeCategoryForm()
+    renameCategoryContext.clearFormId()
+    toggleNewCategoryForm(false)
   }
 
   const onBlur = () => {
-    clearActiveCategoryFormId()
-    closeCategoryForm()
+    renameCategoryContext.clearFormId()
+    toggleNewCategoryForm(false)
   }
 
   return (
     <form
-      className={className}
+      className='category-form-add'
       onSubmit={onSubmit}
       onBlur={onBlur}
     >

@@ -1,3 +1,5 @@
+@use '../../assets/variables' as v;
+
 .note-menu-bar {
   position: sticky;
   bottom: 0;
@@ -8,10 +10,9 @@
   align-items: center;
   justify-content: space-between;
   z-index: 99;
-  color: #404040;
-  background-color: #E5E5E5;
-  border-top: 1px solid #D8D8D8;
-  box-shadow: -1.5px 0px 0px 0px #E5E5E5;
+  background-color: v.$note-menu-bar-light-background-color;
+  color: v.$note-menu-bar-light-text-color;
+  border-top: 1px solid v.$note-menu-bar-light-border-color;
 
   nav {
     display: flex;
@@ -21,15 +22,15 @@
       cursor: pointer;
       padding: 0 0.75rem;
       height: 39px;
-      background-color: #E5E5E5;
+      background-color: v.$note-menu-bar-button-light-background-color;
       border: none;
 
       &:hover {
-        background: #d8d8d8;
+        background: v.$note-menu-bar-hover-button-light-background-color;
       }
 
       &:hover .note-menu-bar-icon {
-        stroke: #404040;
+        stroke: v.$note-menu-bar-hover-icon-light-stroke-color;
       }
 
       &:hover .trash {
@@ -37,11 +38,36 @@
       }
 
       .note-menu-bar-icon {
-        stroke: #666;
+        stroke: v.$note-menu-bar-icon-light-stroke-color;
       }
 
       .note-menu-bar-icon-favorited {
         stroke: #5183f5;
+      }
+    }
+  }
+
+  &.dark-mode {
+    background-color: v.$note-menu-bar-dark-background-color;
+    border-top: 1px solid v.$note-menu-bar-dark-border-color;
+
+    .note-menu-bar-button {
+      background-color: v.$note-menu-bar-button-dark-background-color;
+
+      &:hover {
+        background: v.$note-menu-bar-hover-button-dark-background-color;
+      }
+
+      &:hover .note-menu-bar-icon {
+        stroke: v.$note-menu-bar-hover-icon-dark-stroke-color;
+      }
+
+      &:hover .trash {
+        stroke: #E91A1F;
+      }
+
+      .note-menu-bar-icon {
+        stroke: v.$note-menu-bar-icon-dark-stroke-color;
       }
     }
   }

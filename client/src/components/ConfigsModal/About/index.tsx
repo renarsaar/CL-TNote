@@ -1,14 +1,12 @@
 import './style.scss'
 
-type Props = {}
-
-export default function About({ }: Props) {
+export default function About() {
   return (
     <>
-      <h3>About TakeNote</h3>
+      <h3>About TakeNote clone</h3>
 
       <p>
-        TakeNote is a minimalist note-taking web app for developers. Write in plain text or Markdown in an IDE-like environment.
+        TakeNote clone is a minimalist note-taking web app for developers. Write in plain text or Markdown in an IDE-like environment.
       </p>
 
       <p>
@@ -16,7 +14,7 @@ export default function About({ }: Props) {
       </p>
 
       <p>
-        TakeNote was created by <a href='https://github.com/renarsaar' target='_blank' rel='noreferrer'>Renar Saaremets</a>.
+        TakeNote clone was created by <a href='https://github.com/renarsaar' target='_blank' rel='noreferrer' className='about-link'>Renar Saaremets</a>.
       </p>
       <p>
         <a className='icon-button' href='https://github.com/renarsaar/CL-TNote' target='_blank' rel='noreferrer'>

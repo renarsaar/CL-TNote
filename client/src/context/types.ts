@@ -9,22 +9,22 @@ export type ConfigContextState = {
   addConfig: (prevConfig: any, config: ConfigObject) => void
 }
 
-export type ActiveNoteTooltipState = {
-  activeNoteId: string | null
-  setActiveNoteId: Dispatch<SetStateAction<string | null>>
-  clearActiveNoteId: () => void
+export type NoteTooltipState = {
+  noteId: string | null
+  setNoteId: Dispatch<SetStateAction<string | null>>
+  clearNoteId: () => void
 }
 
-export type ActiveCategoryTooltipState = {
-  activeCategoryId: string | null
-  setActiveCategoryId: Dispatch<SetStateAction<string | null>>
-  clearActiveCategoryId: () => void
+export type CategoryTooltipState = {
+  categoryId: string | null
+  setCategoryId: Dispatch<SetStateAction<string | null>>
+  clearCategoryId: () => void
 }
 
-export type ActiveCategoryFormState = {
-  activeCategoryFormId: string | null
-  setActiveCategoryFormId: Dispatch<SetStateAction<string | null>>
-  clearActiveCategoryFormId: () => void
+export type RenameCategoryState = {
+  formId: string | null
+  setFormId: Dispatch<SetStateAction<string | null>>
+  clearFormId: () => void
 }
 
 export type SearchState = {

@@ -1,6 +1,7 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { useAppDispatch, useAppSelector } from '../../../hooks/hooks'
 import { pruneNotes, selectSelectedNote, setSelectedNote } from '../../../store/notes/notesSlice'
+import { ConfigContext } from '../../../context'
 import NoteCategory from './NoteCategory'
 import NoteOptionsButton from './NoteOptionsButton'
 import FavoritesIcon from '../../Icons/FavoritesIcon'
@@ -16,6 +17,7 @@ type Props = {
 const NoteItem = ({ note }: Props) => {
   const dispatch = useAppDispatch()
   const selectedNote = useAppSelector(selectSelectedNote)
+  const { configs: { theme } } = useContext(ConfigContext)
   const { favorite, text, category } = note
   const [tooltipX, setTooltipX] = useState(0)
   const [tooltipY, setTooltipY] = useState(0)
@@ -33,7 +35,11 @@ const NoteItem = ({ note }: Props) => {
   return (
     <>
       <div
-        className={selectedNote?.id === note.id ? 'note-list-item selected' : 'note-list-item'}
+        className={
+          (selectedNote?.id === note.id) ? 'note-list-item selected' :
+            ((selectedNote?.id !== note.id) && (theme === 'dark')) ? 'note-list-item dark-mode' :
+              'note-list-item'
+        }
         onClick={handleOnClick}
       >
         <div className="note-list-outer">

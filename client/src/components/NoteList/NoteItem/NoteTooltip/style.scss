@@ -1,14 +1,22 @@
+@use '../../../../assets/variables' as v;
+
 .options-context-menu {
   cursor: pointer;
   position: absolute;
   display: flex;
   flex-direction: column;
-  color: #404040;
-  background: #FFF;
-  border: 1px solid #c3c3c3;
+  color: v.$note-sidebar-note-list-item-tooltip-light-text-color;
+  background: v.$note-sidebar-note-list-item-tooltip-light-background-color;
+  border: 1px solid v.$note-sidebar-note-list-item-tooltip-light-border-color;
   border-radius: 4px;
   padding: 0.25rem 0;
   min-width: 230px;
   z-index: 10;
   box-shadow: 0 10px 15px rgba(0, 0, 0, .07), 0 5px 5px rgba(0, 0, 0, .2);
+
+  &.dark-mode {
+    color: v.$note-sidebar-note-list-item-tooltip-dark-text-color;
+    background: v.$note-sidebar-note-list-item-tooltip-dark-background-color;
+    border: 1px solid v.$note-sidebar-note-list-item-tooltip-dark-border-color;
+  }
 }

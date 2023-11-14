@@ -1,14 +1,16 @@
+@use '../../../assets/variables' as v;
+
 .note-list-item {
   cursor: pointer;
   padding: 0.5rem;
   font-weight: 500;
   font-size: .85rem;
   line-height: 1.3;
-  border-bottom: 1px solid #d1d1d1;
-  color: #404040;
+  color: v.$note-sidebar-note-list-item-light-text-color;
+  border-bottom: 1px solid v.$note-sidebar-note-list-item-light-border-bottom-color;
 
   &:hover {
-    background-color: #D8D8D8;
+    background-color: v.$note-sidebar-note-list-item-light-hover-background-color;
   }
 
   &.selected {
@@ -26,6 +28,19 @@
 
     & .note-list-outer .note-title .icon .note-sidebar-favorites-icon {
       stroke: #FFF;
+    }
+  }
+
+  &.dark-mode {
+    color: v.$note-sidebar-note-list-item-dark-text-color;
+    border-bottom: 1px solid v.$note-sidebar-note-list-item-dark-border-bottom-color;
+
+    &:hover {
+      background-color: v.$note-sidebar-note-list-item-dark-hover-background-color;
+
+      .note-list-outer .note-options-button .note-sidebar-icon {
+        stroke: v.$note-sidebar-note-list-item-note-category-hover-icon-dark-stroke-color;
+      }
     }
   }
 
@@ -55,7 +70,7 @@
 
   // Context-options
   &:hover .note-list-outer .note-options-button .note-sidebar-icon {
-    stroke: #404040;
+    stroke: v.$note-sidebar-note-list-item-note-category-hover-icon-light-stroke-color;
   }
 
   &:hover .note-list-outer .note-options-button .note-sidebar-icon-active {
@@ -66,12 +81,20 @@
     display: flex;
     align-items: center;
     font-size: .8rem;
-    color: rgba(0, 0, 0, .4);
+    color: v.$note-sidebar-note-list-item-note-category-light-text-color;
     margin-left: 30px;
 
     .note-sidebar-icon {
-      stroke: rgba(0, 0, 0, .4);
+      stroke: v.$note-sidebar-note-list-item-note-category-light-stroke-color;
       margin-right: .5rem;
+    }
+  }
+
+  &.dark-mode .note-category {
+    color: v.$note-sidebar-note-list-item-note-category-dark-text-color;
+
+    .note-sidebar-icon {
+      stroke: v.$note-sidebar-note-list-item-note-category-dark-stroke-color;
     }
   }
 }

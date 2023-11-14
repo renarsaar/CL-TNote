@@ -1,18 +1,17 @@
 import { useContext } from 'react'
 import { editCategory } from '../../../store/categories/categorySlice'
 import { useAppDispatch } from '../../../hooks/hooks'
-import { ActiveCategoryRenameFormContext } from '../../../context/ActiveCategoryRenameFormContext'
+import { RenameCategoryContext } from '../../../context/RenameCategoryContext'
 import '../style.scss'
 
 type Props = {
   id: string
   value: string
-  className: 'category-form-rename'
 }
 
-const RenameCategoryForm = ({ id, value, className }: Props) => {
+const RenameCategoryForm = ({ id, value }: Props) => {
   const dispatch = useAppDispatch()
-  const { clearActiveCategoryFormId } = useContext(ActiveCategoryRenameFormContext)
+  const renameCategoryContext = useContext(RenameCategoryContext)
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -23,16 +22,16 @@ const RenameCategoryForm = ({ id, value, className }: Props) => {
 
     dispatch(editCategory({ categoryId: id, value: newValue }))
 
-    clearActiveCategoryFormId()
+    renameCategoryContext.clearFormId()
   }
 
   const onBlur = () => {
-    clearActiveCategoryFormId()
+    renameCategoryContext.clearFormId()
   }
 
   return (
     <form
-      className={className}
+      className='category-form-rename'
       onSubmit={onSubmit}
       onBlur={onBlur}
     >

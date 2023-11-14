@@ -1,11 +1,13 @@
-import { Fragment } from 'react'
+import { Fragment, useContext } from 'react'
+import { ConfigContext } from '../../../context'
+import { ConfigContextState } from '../../../context/types'
 import './style.scss'
-
-type Props = {}
 
 type KeyboardShortcutsProps = { name: string, sequences: string[] }[]
 
-export default function KeyboardShortcuts({ }: Props) {
+export default function KeyboardShortcuts() {
+  const { configs: { theme } } = useContext<ConfigContextState>(ConfigContext)
+
   const keyboardShortcuts: KeyboardShortcutsProps = [
     { name: 'Create a new note', sequences: ['CTRL', 'ALT', 'N'] },
     { name: 'Delete a note', sequences: ['CTRL', 'ALT', 'U'] },
@@ -23,7 +25,7 @@ export default function KeyboardShortcuts({ }: Props) {
       <h3>Keyboard Shortcuts</h3>
 
       {keyboardShortcuts.map((shortcut) => (
-        <div className='settings-shortcut' key={shortcut.name}>
+        <div className={theme === 'light' ? 'settings-shortcut' : 'settings-shortcut dark-mode'} key={shortcut.name}>
           <div>{shortcut.name}</div>
 
           <div className='keys'>

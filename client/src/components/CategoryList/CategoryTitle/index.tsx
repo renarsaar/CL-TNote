@@ -1,24 +1,35 @@
 import CollapseIcon from '../../Icons/CollapseIcon'
 import AddCategoryIcon from '../../Icons/AddCategoryIcon'
-import '../style.scss'
+import './style.scss'
 
 type Props = {
   isCollapsed: boolean,
-  handleIsCollapsed: () => void,
-  openCategoryForm: () => void
+  toggleCollapse: () => void,
+  toggleNewCategoryForm: (isOpen: boolean) => void
 }
 
-const CategoryTitle = ({ isCollapsed, handleIsCollapsed, openCategoryForm }: Props) => {
+const CategoryTitle = ({ isCollapsed, toggleCollapse, toggleNewCategoryForm }: Props) => {
+  const addNewCategory = () => toggleNewCategoryForm(true)
+
   return (
     <div className='category-title'>
-      <button className='collapse-button' onClick={handleIsCollapsed}>
-        <CollapseIcon isCollapsed={isCollapsed} className='app-sidebar-icon' width={16} height={16} />
+      <button className='collapse-btn' onClick={toggleCollapse}>
+        <CollapseIcon
+          isCollapsed={isCollapsed}
+          className='app-sidebar-icon'
+          width={16}
+          height={16}
+        />
 
-        <h2>Categories</h2>
+        <h2 className='title'>Categories</h2>
       </button>
 
-      <button className='add-category-button' onClick={openCategoryForm}>
-        <AddCategoryIcon className='app-sidebar-icon' width={16} height={16} />
+      <button className='add-category-btn' onClick={addNewCategory}>
+        <AddCategoryIcon
+          className='app-sidebar-icon'
+          width={16}
+          height={16}
+        />
       </button>
     </div>
   )

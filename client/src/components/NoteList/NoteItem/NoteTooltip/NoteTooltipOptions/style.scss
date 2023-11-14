@@ -1,3 +1,5 @@
+@use '../../../../../assets/variables' as v;
+
 .options-nav {
   font-size: .9rem;
 
@@ -7,14 +9,14 @@
     align-items: center;
     padding: 0.5rem 1rem;
     border-radius: 0;
-    color: #404040;
+    color: v.$note-sidebar-note-list-item-options-nav-light-text-color;
 
     &:hover {
-      background: #F0F0F0;
-      color: #000;
+      background: v.$note-sidebar-note-list-item-hover-options-nav-light-background-color;
+      color: v.$note-sidebar-note-list-item-hover-options-nav-light-text-color;
 
       &.options-context-icon {
-        stroke: #000;
+        stroke: v.$note-sidebar-note-list-item-hover-options-nav-options-context-icon-light-stroke-color;
       }
 
       &.trash {
@@ -28,8 +30,34 @@
     }
 
     .options-context-icon {
-      stroke: #404040;
+      stroke: v.$note-sidebar-note-list-item-options-nav-options-context-icon-light-stroke-color;
       margin-right: .75rem;
+    }
+  }
+
+  &.dark-mode &-item {
+    color: v.$note-sidebar-note-list-item-options-nav-dark-text-color;
+
+    &:hover {
+      background: v.$note-sidebar-note-list-item-hover-options-nav-dark-background-color;
+      color: v.$note-sidebar-note-list-item-hover-options-nav-dark-text-color;
+
+      &.options-context-icon {
+        stroke: v.$note-sidebar-note-list-item-hover-options-nav-options-context-icon-dark-stroke-color;
+      }
+
+      &.trash {
+        background: #f2777a;
+        color: #FFF;
+
+        & .options-context-icon {
+          stroke: #FFF;
+        }
+      }
+    }
+
+    .options-context-icon {
+      stroke: v.$note-sidebar-note-list-item-options-nav-options-context-icon-dark-stroke-color;
     }
   }
 }

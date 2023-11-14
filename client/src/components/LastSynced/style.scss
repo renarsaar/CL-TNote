@@ -1,3 +1,5 @@
+@use '../../assets/variables' as v;
+
 .last-synced {
   margin: 0 .4rem;
   display: flex;
@@ -6,5 +8,9 @@
 
   span {
     font-size: .7rem;
+  }
+
+  &.dark-mode {
+    color: v.$last-synced-dark-text-color;
   }
 }

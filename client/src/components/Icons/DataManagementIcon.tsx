@@ -1,5 +1,5 @@
 type Props = {
-  className: 'tab-button-icon';
+  className: 'tab-btn-icon';
   width: number;
   height: number;
 }

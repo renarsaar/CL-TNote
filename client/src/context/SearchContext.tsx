@@ -12,7 +12,7 @@ export const SearchContext = createContext<SearchState>(
 
 type ProviderProps = { children: ReactElement }
 
-const Searchrovider: FC<ProviderProps> = ({ children }) => {
+const SearchProvider: FC<ProviderProps> = ({ children }) => {
   const [searchTerm, setSearchTerm] = useState<string>('')
 
   return (
@@ -27,4 +27,4 @@ const Searchrovider: FC<ProviderProps> = ({ children }) => {
   )
 }
 
-export default Searchrovider
+export default SearchProvider

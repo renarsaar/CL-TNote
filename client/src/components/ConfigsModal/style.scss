@@ -1,3 +1,5 @@
+@use '../../assets/variables' as v;
+
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -22,7 +24,7 @@
 
   .configs-modal {
     z-index: 100;
-    background: white;
+    background: v.$configs-modal-light-background-color;
     position: relative;
     margin: 1.75rem auto;
     border-radius: 3px;
@@ -93,5 +95,22 @@
         }
       }
     }
+  }
+
+  &.dark-mode {
+    .configs-modal {
+      background: v.$configs-modal-dark-background-color;
+
+      .tab-content {
+        h3 {
+          color: v.$configs-modal-dark-heading-color;
+        }
+
+        p {
+          color: v.$configs-modal-dark-paragraph-color;
+        }
+      }
+    }
+
   }
 }

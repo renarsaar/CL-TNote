@@ -1,5 +1,7 @@
 import { useContext } from 'react'
+import { ConfigContext } from '../../context'
 import { ResizerContext } from '../../context/ResizerContext'
+import { ConfigContextState } from '../../context/types'
 import './style.scss'
 
 type Props = {
@@ -7,15 +9,16 @@ type Props = {
 }
 
 export default function Resizer({ component }: Props) {
-  const { handleAppSideBarDrag, handleNoteSideBarDrag } = useContext(ResizerContext);
+  const { handleAppSideBarDrag, handleNoteSideBarDrag } = useContext(ResizerContext)
+  const { configs: { theme } } = useContext<ConfigContextState>(ConfigContext)
 
-  const handleMouseDown = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+  const handleMouseDown = () => {
     component === 'NoteSideBar'
       ? handleNoteSideBarDrag(true)
       : handleAppSideBarDrag(true)
   }
 
-  const handleMouseUp = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+  const handleMouseUp = () => {
     component === 'NoteSideBar'
       ? handleNoteSideBarDrag(false)
       : handleAppSideBarDrag(false)
@@ -26,7 +29,7 @@ export default function Resizer({ component }: Props) {
       onMouseDown={handleMouseDown}
       onMouseUp={handleMouseUp}
       role='presentation'
-      className='resizer'
+      className={theme === 'light' ? 'resizer vertical' : 'resizer vertical dark-mode'}
     />
   )
 }

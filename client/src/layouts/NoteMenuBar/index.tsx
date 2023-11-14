@@ -1,16 +1,20 @@
+import { useContext } from 'react'
+import { ConfigContextState } from '../../context/types'
+import { ConfigContext } from '../../context'
 import NavFunctions from './NavFunctions'
 import NavOptions from './NavOptions'
+import './style.scss'
 
-import './style.scss';
+const NoteMenuBar = () => {
+  const { configs: { theme } } = useContext<ConfigContextState>(ConfigContext)
 
-type Props = {}
-
-export default function NoteMenuBar({ }: Props) {
   return (
-    <div className='note-menu-bar'>
+    <div className={theme === 'light' ? 'note-menu-bar' : 'note-menu-bar dark-mode'}>
       <NavFunctions />
 
       <NavOptions />
     </div>
   )
 }
+
+export default NoteMenuBar

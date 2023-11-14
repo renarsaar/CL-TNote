@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { ActiveNoteTooltipContext } from '../../../../context/ActiveNoteTooltipContext'
+import { NoteTooltipContext } from '../../../../context/NoteTooltipContext'
 import NoteOptionsIcon from '../../../Icons/NoteOptionsIcon'
 import './style.scss'
 
@@ -11,13 +11,13 @@ type Props = {
 }
 
 const NoteOptionsButton = ({ noteId, selectedNoteId, setTooltipX, setTooltipY }: Props) => {
-  const { setActiveNoteId } = useContext(ActiveNoteTooltipContext)
+  const noteTooltipContext = useContext(NoteTooltipContext)
   const isNoteSelected: boolean = noteId === selectedNoteId
 
   const handleOnClick = (event: React.MouseEvent<SVGElement>) => {
     event.stopPropagation()
 
-    setActiveNoteId(noteId)
+    noteTooltipContext.setNoteId(noteId)
     setTooltipX(event.clientX)
     setTooltipY(event.clientY)
   }

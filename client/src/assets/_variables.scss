@@ -1,34 +1,187 @@
 // APP-SIDEBAR
-$app-sidebar-dark-bg: #1F1F1F;
-$app-sidebar-light-bg: #2D2D2D;
-$app-sidebar-icon-color: #FFFFFF40;
-$app-sidebar-icon-active-color: #5183F5;
-$app-sidebar-categories-collapse-btn-color: #909090;
-$app-sidebar-categories-heading-color: #FFFFFF40;
-$app-sidebar-link-color: #D0D0D0;
+$app-sidebar-background-color: #2D2D2D;
+$app-sidebar-text-color: #D0D0D0;
+$app-sidebar-border-right-color: #1F1F1F;
+$app-sidebar-new-note-button-text-color: #FFF;
+$app-sidebar-new-note-button-hover-background-color: #5183F5;
+$app-sidebar-new-note-button-icon-stroke-color: #FFF;
+$app-sidebar-selected-button-background-color: #202020;
+$app-sidebar-selected-button-icon-stroke-color: #5183F5;
+$app-sidebar-hover-button-background-color: #3A3A3A;
+$app-sidebar-hover-button-text-color: #FFF;
+$app-sidebar-hover-button-icon-stroke-color: #B7B7B7;
+$app-sidebar-hover-selected-button-icon-stroke-color: #5183F5;
+$app-sidebar-hover-category-item-background-color: #3A3A3A;
+$app-sidebar-hover-category-item-color: #FFF;
+$app-sidebar-categories-collapse-button-color: #909090;
+$app-sidebar-categories-header-color: #FFFFFF40;
+$app-sidebar-categories-collapse-button-hover-icon-stroke-color: #FFF;
+$app-sidebar-add-category-button-color: #909090;
+$app-sidebar-add-category-button-hover-icon-stroke-color: #FFF;
+$app-sidebar-category-item-context-icon-color: #7A7A7A;
+$app-sidebar-active-category-item-background-color: #202020;
+$app-sidebar-active-category-item-color: #FFF;
+$app-sidebar-active-category-item-icon-stroke-color: #5183f5;
+$app-sidebar-category-form-input-background-color: #202020;
+$app-sidebar-category-form-input-color: #EEE;
+$app-sidebar-focus-category-form-input-box-shadow-color: rgba(0, 123, 255, .25);
+
+// REZISER
+$resizer-background-color: #000;
+$resizer-border-color: rgba(255, 255, 255, 0);
+$resizer-hover-border-color: rgba(0, 0, 0, .5);
+$resizer-light-mode-opacity: .2;
+$resizer-dark-mode-opacity: 1;
 
 // NOTE-SIDEBAR
-// $note-sidebar-dark-bg: #;
-// $note-sidebar-light-bg: #;
-// $note-sidebar-light-border-color: #;
-// $note-sidebar-dark-border-color: #;
-// $note-sidebar-dark-input-bg: #;
-// $note-sidebar-light-input-bg: #;
-// $note-sidebar-dark-input-text-color: #;
-// $note-sidebar-light-input-text-color: #;
+$note-sidebar-light-background-color: #E5E5E5;
+$note-sidebar-dark-background-color: #242424;
+$note-sidebar-light-border-right-color: #CCC;
+$note-sidebar-dark-border-right-color: #1F1F1F;
+$note-sidebar-header-light-background-color: #E5E5E5;
+$note-sidebar-header-dark-background-color: #292929;
+$note-sidebar-header-light-border-color: #CCC;
+$note-sidebar-header-dark-border-color: #141414;
+$note-sidebar-header-dark-input-background-color: #404040;
+$note-sidebar-header-dark-input-text-color: #D0D0D0;
+$note-sidebar-header-light-input-border-color: #D0D0D0;
+$note-sidebar-header-dark-input-border-color: #1A1A1A;
+$note-sidebar-header-light-empty-trash-btn-background-color: #D1D1D1;
+$note-sidebar-header-dark-empty-trash-btn-background-color: #1F1F1F;
+$note-sidebar-header-light-empty-trash-btn-color: #404040;
+$note-sidebar-header-dark-empty-trash-btn-color: #D0D0D0;
+$note-sidebar-note-list-item-light-text-color: #1A1A1A;
+$note-sidebar-note-list-item-dark-text-color: #D1D1D1;
+$note-sidebar-note-list-item-light-border-bottom-color: #D1D1D1;
+$note-sidebar-note-list-item-dark-border-bottom-color: #1A1A1A;
+$note-sidebar-note-list-item-light-hover-background-color: #D8D8D8;
+$note-sidebar-note-list-item-dark-hover-background-color: #333;
+$note-sidebar-note-list-item-note-category-light-text-color: #00000066;
+$note-sidebar-note-list-item-note-category-dark-text-color: #FFFFFF4D;
+$note-sidebar-note-list-item-note-category-light-stroke-color: #00000066;
+$note-sidebar-note-list-item-note-category-dark-stroke-color: #FFFFFF4D;
+$note-sidebar-note-list-item-note-category-hover-icon-light-stroke-color: #404040;
+$note-sidebar-note-list-item-note-category-hover-icon-dark-stroke-color: #888;
+$note-sidebar-note-list-item-tooltip-light-background-color: #FFF;
+$note-sidebar-note-list-item-tooltip-dark-background-color: #2D2D2D;
+$note-sidebar-note-list-item-tooltip-light-text-color: #404040;
+$note-sidebar-note-list-item-tooltip-dark-text-color: #D0D0D0;
+$note-sidebar-note-list-item-tooltip-light-border-color: #C3C3C3;
+$note-sidebar-note-list-item-tooltip-dark-border-color: #1F1F1F;
+$note-sidebar-note-list-item-move-to-category-select-dark-background-color: #474747;
+$note-sidebar-note-list-item-move-to-category-select-dark-text-color: #D0D0D0;
+$note-sidebar-note-list-item-move-to-category-select-light-border-color: #D0D0D0;
+$note-sidebar-note-list-item-move-to-category-select-dark-border-color: #262626;
+$note-sidebar-note-list-item-options-item-nav-light-text-color: #404040;
+$note-sidebar-note-list-item-options-item-nav-options-context-icon-light-stroke-color: #404040;
+$note-sidebar-note-list-item-options-nav-light-text-color: #404040;
+$note-sidebar-note-list-item-options-nav-dark-text-color: #D0D0D0;
+$note-sidebar-note-list-item-options-nav-options-context-icon-light-stroke-color: #404040;
+$note-sidebar-note-list-item-options-nav-options-context-icon-dark-stroke-color: #ffffff80;
+$note-sidebar-note-list-item-hover-options-nav-light-background-color: #F0F0F0;
+$note-sidebar-note-list-item-hover-options-nav-dark-background-color: #414141;
+$note-sidebar-note-list-item-hover-options-nav-light-text-color: #000;
+$note-sidebar-note-list-item-hover-options-nav-dark-text-color: #D0D0D0;
+$note-sidebar-note-list-item-hover-options-nav-options-context-icon-light-stroke-color: #000;
+$note-sidebar-note-list-item-hover-options-nav-options-context-icon-dark-stroke-color: #FFF;
+$note-sidebar-note-list-item-hover-options-item-nav-light-background-color: #F0F0F0;
+$note-sidebar-note-list-item-hover-options-item-nav-light-text-color: #000;
+$note-sidebar-note-list-item-hover-options-item-nav-context-icon-light-stroke-color: #000;
+$note-sidebar-note-list-item-hover-options-item-nav-trash-background-color: #F2777A;
+$note-sidebar-note-list-item-hover-options-item-nav-trash-text-color: #FFF;
+$note-sidebar-note-list-item-hover-options-item-nav-trash-context-icon-stroke-color: #FFF;
 
-// CODEMIRROR
-$codemirror-dark-bg: #333;
-$codemirror-dark-text-color: #B3B9C5;
-$codemirror-dark-line-number-color: #4F4F4F;
-$codemirror-light-bg: #F5F5F5;
-$codemirror-light-text-color: #202020;
-$codemirror-light-line-number-color: #B0B0B0;
+// TODO: variable names
 
 // NOTE-MENU-BAR
-$menu-dark-bg: #242424;
-$menu-dark-additional-color: #FFFFFF66;
-$menu-dark-btn-color: #ffffff80;
-$menu-light-bg: #E5E5E5;
-$menu-light-additional-color: #404040;
-$menu-light-btn-color: #666666;
+$note-menu-bar-light-background-color: #E5E5E5;
+$note-menu-bar-dark-background-color: #242424;
+$note-menu-bar-light-text-color: #404040;
+$note-menu-bar-light-border-color: #D8D8D8;
+$note-menu-bar-dark-border-color: #141414;
+$note-menu-bar-button-light-background-color: #E5E5E5;
+$note-menu-bar-button-dark-background-color: #242424;
+$note-menu-bar-hover-button-light-background-color: #D8D8D8;
+$note-menu-bar-hover-button-dark-background-color: #1A1A1A;
+$note-menu-bar-hover-icon-light-stroke-color: #404040;
+$note-menu-bar-hover-icon-dark-stroke-color: #FFFFFFB3;
+$note-menu-bar-icon-light-stroke-color: #666;
+$note-menu-bar-icon-dark-stroke-color: #FFFFFF80;
+$last-synced-dark-text-color: #FFFFFF66;
+
+// CONFIGS-MODAL-HEADER
+$configs-modal-header-light-background-color: #FFF;
+$configs-modal-header-dark-background-color: #333;
+$configs-modal-header-light-border-color: #E5E5E5;
+$configs-modal-header-dark-border-color: #262626;
+$configs-modal-header-dark-heading-color: #D0D0D0;
+$configs-modal-header-close-btn-light-background-color: #FFF;
+$configs-modal-header-close-btn-dark-background-color: #333;
+$configs-modal-header-close-btn-light-text-color: #000;
+$configs-modal-header-close-btn-dark-text-color: #D0D0D0;
+$configs-modal-header-hover-close-btn-light-background-color: #000;
+$configs-modal-header-hover-close-btn-dark-background-color: #262626;
+
+// CONFIGS-MODAL
+$configs-modal-light-background-color: #FFF;
+$configs-modal-dark-background-color: #333;
+$configs-modal-dark-heading-color: #FFF;
+$configs-modal-dark-paragraph-color: #FFFFFF80;
+$configs-modal-tab-list-light-border-color: #E5E5E5;
+$configs-modal-tab-list-dark-border-color: #1A1A1A;
+$configs-modal-tab-light-background-color: #FFF;
+$configs-modal-tab-dark-background-color: #333;
+$configs-modal-tab-light-text-color: #404040;
+$configs-modal-tab-dark-text-color: #D0D0D0;
+$configs-modal-tab-btn-icon-light-color: #00000080;
+$configs-modal-tab-btn-icon-dark-color: #FFFFFF66;
+$configs-modal-tab-hover-light-background-color: #F2F2F2;
+$configs-modal-tab-hover-dark-background-color: #424242;
+$configs-modal-tab-hover-light-text-color: #404040;
+$configs-modal-tab-hover-dark-text-color: #FFF;
+$configs-modal-tab-hover-tab-btn-icon-dark-text-color: #FFF;
+$configs-modal-tab-hover-active-dark-background-color: #242424;
+$configs-modal-tab-hover-active-dark-text-color: #FFF;
+$configs-modal-tab-hover-active-tab-btn-icon-dark-text-color: #5183f5;
+
+// CONFIGS-MODAL-PREFERENCES
+$configs-modal-preferences-light-border-color: #E5E5E5;
+$configs-modal-preferences-dark-border-color: #262626;
+$configs-modal-preferences-dark-heading-color: #FFFFFFCC;
+$configs-modal-preferences-light-paragraph-color: #00000080;
+$configs-modal-preferences-dark-paragraph-color: #FFFFFFCC;
+$configs-modal-preferences-light-slider-background-color: #D0D0D0;
+$configs-modal-preferences-dark-slider-background-color: #1A1A1A;
+$configs-modal-preferences-dark-select-background-color: #474747;
+$configs-modal-preferences-dark-select-color: #D0D0D0;
+$configs-modal-preferences-light-select-border-color: #D0D0D0;
+$configs-modal-preferences-dark-select-border-color: #262626;
+
+// CONFIGS-MODAL-KEYBOARD-SHORTCUTS
+$configs-modal-keyboard-shortcuts-dark-text-color: #D0D0D0;
+$configs-modal-keyboard-shortcuts-kbd-light-background-color: #F7F7F7;
+$configs-modal-keyboard-shortcuts-kbd-dark-background-color: #262626;
+$configs-modal-keyboard-shortcuts-kbd-light-text-color: #333;
+$configs-modal-keyboard-shortcuts-kbd-dark-text-color: #B7B7B7;
+$configs-modal-keyboard-shortcuts-kbd-light-border-color: #CCC;
+$configs-modal-keyboard-shortcuts-kbd-dark-border-color: #1A1A1A;
+$configs-modal-keyboard-shortcuts-kbd-light-box-shadow: 0 1px 0 rgba(0, 0, 0, .2), 0 0 0 2px #FFF inset;
+$configs-modal-keyboard-shortcuts-kbd-dark-box-shadow: 0 1px 0 rgba(255, 255, 255, .2), 0 0 0 2px #222 inset;
+$configs-modal-keyboard-shortcuts-kbd-light-text-shadow-color: #FFF;
+$configs-modal-keyboard-shortcuts-kbd-dark-text-shadow-color: #000;
+
+// EMPTY-NOTE
+$empty-note-light-background-color: #F5F5F5;
+$empty-note-dark-background-color: #3F3F3F;
+$empty-note-light-heading-color: #404040;
+$empty-note-dark-heading-color: #D0D0D0;
+$empty-note-light-kbd-background-color: #F7F7F7;
+$empty-note-dark-kbd-background-color: #333;
+$empty-note-light-kbd-text-color: #333;
+$empty-note-dark-kbd-text-color: #B7B7B7;
+$empty-note-light-kbd-border-color: #CCC;
+$empty-note-dark-kbd-border-color: #1A1A1A;
+$empty-note-light-kbd-box-shadow: 0 1px 0 rgba(0, 0, 0, .2), 0 0 0 2px #FFF inset;
+$empty-note-dark-kbd-box-shadow: 0 1px 0 rgba(255, 255, 255, .2), 0 0 0 2px #222 inset;
+$empty-note-light-kbd-text-shadow: #FFF;
+$empty-note-dark-kbd-text-shadow: #000;

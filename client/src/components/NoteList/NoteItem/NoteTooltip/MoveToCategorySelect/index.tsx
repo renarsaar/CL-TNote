@@ -3,8 +3,10 @@ import { useAppDispatch, useAppSelector } from '../../../../../hooks/hooks';
 import { selectCategories, setSelectedCategory } from '../../../../../store/categories/categorySlice';
 import { selectNavigation, setNavigation } from '../../../../../store/navigation/navigationSlice';
 import { selectNotes, setNoteCategory } from '../../../../../store/notes/notesSlice';
-import { ActiveNoteTooltipContext } from '../../../../../context/ActiveNoteTooltipContext';
+import { NoteTooltipContext } from '../../../../../context/NoteTooltipContext';
 import './style.scss'
+import { ConfigContextState } from '../../../../../context/types';
+import { ConfigContext } from '../../../../../context';
 
 type Props = {
   noteId: string
@@ -14,7 +16,8 @@ const MoveToCategorySelect = ({ noteId }: Props) => {
   const dispatch = useAppDispatch()
   const categories = useAppSelector(selectCategories)
   const { tab } = useAppSelector(selectNavigation)
-  const { clearActiveNoteId } = useContext(ActiveNoteTooltipContext)
+  const { configs: { theme } } = useContext<ConfigContextState>(ConfigContext)
+  const noteTooltipContext = useContext(NoteTooltipContext)
   const notes = useAppSelector(selectNotes)
   const findNote = notes.find((note) => note.id === noteId)
 
@@ -32,12 +35,12 @@ const MoveToCategorySelect = ({ noteId }: Props) => {
 
     dispatch(setNavigation(value))
 
-    clearActiveNoteId()
+    noteTooltipContext.clearNoteId()
   }
 
   return tab !== 'trash' ? (
     <select
-      className='move-to-category-select'
+      className={theme === 'light' ? 'move-to-category-select' : 'move-to-category-select dark-mode'}
       defaultValue='Move to category...'
       onChange={onChange}
     >
